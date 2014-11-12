@@ -107,6 +107,14 @@
 			return false;
 		};
 
+	/**
+	 * @description
+	 * fn function
+	 *
+	 * @param {fnName} function name
+	 * @param {dependencies} array of dependencies ended by function defition
+	 * @returns {Object} the Core
+	 */
 	function fn (fnName, dependencies) {
 		if( dependencies ) {
 			fn.define(fnName, dependencies);
