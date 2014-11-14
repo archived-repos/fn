@@ -1,0 +1,23 @@
+{
+  "name": "jstools",
+  "version": "0.1.0",
+  "description": "General JS Tools Collection",
+  "main": "core.js",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jstools/jstools.git"
+  },
+  "author": "Jesus Germade <jesus@germade.es>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jstools/jstools/issues"
+  },
+  "homepage": "https://github.com/jstools/jstools"
+}
