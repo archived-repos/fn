@@ -1,8 +1,8 @@
 {
-  "name": "jstools",
+  "name": "jcore",
   "version": "0.1.0",
-  "description": "General JS Tools Collection",
-  "main": "jstools.min.js",
+  "description": "Basic JS Web Tools",
+  "main": "jcore.min.js",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -19,12 +19,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jstools/jstools.git"
+    "url": "https://github.com/jstools/jcore.git"
   },
   "author": "Jesus Germade <jesus@germade.es>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jstools/jstools/issues"
+    "url": "https://github.com/jstools/jcore/issues"
   },
-  "homepage": "https://github.com/jstools/jstools"
+  "homepage": "https://github.com/jstools/jcore"
 }
