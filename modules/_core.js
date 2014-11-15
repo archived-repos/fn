@@ -53,7 +53,10 @@
     			return in_keys;
     		}
     	},
-    	keys: Object.keys
+    	keys: Object.keys,
+    	global: function (varName, o) {
+    		(typeof window === 'undefined' ? module.exports : window)[varName] = o;
+    	}
 	};
 
 	var definitions = { '_': _ },
@@ -191,6 +194,6 @@
 		}	
 	};
 
-	window.fn = fn;
+	_.global('fn', fn);
 
 })();

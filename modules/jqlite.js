@@ -1,6 +1,44 @@
 fn.define('$', function (_) {
   'use strict';
 
+  if( !Element.prototype.matchesSelector ) {
+    Element.prototype.matchesSelector = (
+      Element.prototype.webkitMatchesSelector ||
+      Element.prototype.mozMatchesSelector ||
+      Element.prototype.msMatchesSelector ||
+      Element.prototype.oMatchesSelector
+    );
+  }
+
+  function stopEvent (e) {
+    if(e) e.stopped = true;
+    if (e &&e.preventDefault) e.preventDefault();
+    else if (window.event && window.event.returnValue) window.eventReturnValue = false;
+  }
+  
+  function triggerEvent (element,name,args,data){
+    var event; // The custom event that will be created
+    
+    if (document.createEvent) {
+      event = document.createEvent("HTMLEvents");
+      event.data = data;
+      event.initEvent(name, true, true);
+    } else {
+      event = document.createEventObject();
+      event.data = data;
+    }
+    
+    event.eventName = name;
+    if( isObject(args) ) {
+      _.keys(args).forEach(function(key){ event[key] = args[key]; });
+    }
+    
+    if(document.createEvent) element.dispatchEvent(event);
+    else element.fireEvent("on" + event.eventType, event);
+    
+    return event;
+  }
+
 	var RE_HAS_SPACES = /\s/,
       RE_ONLY_LETTERS = /^[a-zA-Z]+$/,
       RE_IS_ID = /^\#.+/,
@@ -24,8 +62,6 @@ fn.define('$', function (_) {
   }
   
   listDOM.prototype = new Array();
-  
-  listDOM.prototype.isdom = function(){};
   
   listDOM.fn = function(name,elementDo,collectionDo) {
       if( _.isString(name) ) {
@@ -262,7 +298,7 @@ fn.define('$', function (_) {
               this.innerHTML = html;
               this.find('script').each(function(script){
               	if( script.type == 'text/javascript' ) {
-              		try{ eval('(function(){'+script.textContent+'})();'); }catch(err){ console.log(err.message); }
+              		try{ eval('(function(){ \'use strict\';'+script.textContent+'})();'); }catch(err){ console.log(err.message); }
               	} else if( /^text\/coffee(script)/.test(script.type) && isObject(window.CoffeeScript) ) {
               		if( CoffeeScript.compile instanceof Function ) {
               			try{ eval(CoffeeScript.compile(script.textContent)); }catch(err){ console.log(err.message); }
