@@ -145,8 +145,8 @@
 			// log('fn.define', fnName, fnDef, dependencies);
 			fn.require(dependencies, function () {
 				definitions[fnName] = fnDef.apply(definitions, this.injections);
-				triggerFn(fnName);
 				log('fn defined: ', fnName);
+				triggerFn(fnName);
 			});
 		}
 	};

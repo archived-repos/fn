@@ -1,4 +1,4 @@
-fn.define('parse', function(_){
+fn.define('parse', ['_', function (_) {
     
     var cmd = {},
         splitRex = /\$[\w\?]*{[^\}]+}|{\$}|{\:}/,
@@ -13,8 +13,12 @@ fn.define('parse', function(_){
             list.push( closer ? { cmd: '', arg: '/' } : ( colon ? { cmd: '', arg: 'else' } : { cmd: cmd, arg: arg } ) );
             list.push(texts.shift());
         });
-        
-        return parseTokens('root',false,list);
+
+        var parsed = parseTokens('root',false,list)
+
+        return function () {
+            parsed.render.apply(this, arguments);
+        };
     }
     
     $parse.cmd = function(cmd_name,handler){
@@ -35,7 +39,6 @@ fn.define('parse', function(_){
     
     $parse.modelQuery = function(model,selector) {
 		selector = selector.trim();
-		//if( /^\'.*\'$/.test(selector) ) return [selector.match(/^\'(.*)\'$/)[1]];
 		
 		var path = selector.split('/'), step, parent;
 		while( step = path.shift() ) {
@@ -51,10 +54,9 @@ fn.define('parse', function(_){
 		return model || '';
     };
 	
-	$parse.modelValue = function(model,arg){
-        
+	$parse.modelValue = function (model, arg){
         var value;
-        //if( /^[\w\_\.]+$/.test(arg) ) value = _.key(model,arg);
+        
         if( /^[\w\_\.]+$/.test(arg) ) value = $parse.modelQuery(model,arg);
         else {
             var eval_vars = '';
@@ -78,7 +80,7 @@ fn.define('parse', function(_){
         this.list = list || [];
     }
     
-    modelScript.prototype.render = function(model,args){
+    modelScript.prototype.render = function(model, args){
         var tokens;
         
         if( cmd[this.cmd] instanceof Function ) {
@@ -141,14 +143,6 @@ fn.define('parse', function(_){
         if( cmd != 'root' ) console.log('something wrong in script');
         return new modelScript(cmd,arg,options,list);
     }
-    
-	$parse.cmd('i18n',function(){
-		console.log('i18n',this);
-		var params = (this.args[0] || '').match(/(([\w]+)\s*\:\s*)?(.*)/),
-		    key = $parse.modelValue(this.model,params[3]);
-		    //console.log('i18n',key,params[2],($i18n(key,params[2]) || '$i18n{'+key+'}'));
-		return ($i18n(key,params[2]) || '$i18n{'+( params[2] ? ( params[2] + ':' ) : '' )+key+'}');
-    });
 
 	$parse.cmd('each',function(collection){
 	    var result = '';
@@ -190,4 +184,4 @@ fn.define('parse', function(_){
     $parse.cmd('with',function(){ return $parse._run(this.content,$parse.modelQuery(this.model,this.args[0])); });
 
     return $parse;
-});
+}]);
