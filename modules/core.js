@@ -84,6 +84,8 @@
 			fn.define(f, dependencies);
 		} else if( _.isArray(f) ) {
 			return definitions[f];
+		} else if( _.isString(f) ) {
+			return definitions[f];
 		} else {
 			fn.run(f);
 		}
@@ -103,18 +105,20 @@
 	}
 
 	fn.run = function (dependencies) {
-		var callback;
+		var f;
 
 		if( _.isArray(dependencies) ) {
-			callback = dependencies.pop();
+			f = dependencies.pop();
 		} else if( _.isFunction(dependencies) ) {
-			callback = dependencies;
-			dependencies = callback.toString().match(RE_FN_ARGS)[1].split(',');
+			f = dependencies;
+			dependencies = f.toString().match(RE_FN_ARGS)[1].split(',');
 		}
 
-		fn.require(dependencies, function () {
-			callback.apply(definitions, this.injections);
-		});
+		if( f instanceof Function ) {
+			fn.require(dependencies, function () {
+				f.apply(definitions, this.injections);
+			});
+		}
 	};
 
 	fn.define = function (fnName, dependencies) {

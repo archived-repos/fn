@@ -1,4 +1,4 @@
-fn.define('$', function (_) {
+fn.define('$', [ '_', function (_) {
   'use strict';
 
   if( !Element.prototype.matchesSelector ) {
@@ -381,4 +381,4 @@ fn.define('$', function (_) {
   	return new listDOM(selector);
   };
   
-});
+}]);

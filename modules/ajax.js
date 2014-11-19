@@ -1,4 +1,4 @@
-fn.define('ajax', function(promise) {
+fn.define('ajax', ['promise', function (promise) {
 	'use strict';
 
 	function ajax(url,args){
@@ -27,6 +27,7 @@ fn.define('ajax', function(promise) {
 	        
 		xhr.promise = promise(function (resolve, reject) {
 
+
 	        xhr.open(args.method,url,(args.async === undefined) ? true : args.async);
 	        xhr.onreadystatechange=function(){
 	            if( xhr.readyState == 'complete' || xhr.readyState == 4 ) {
@@ -43,21 +44,21 @@ fn.define('ajax', function(promise) {
 	        xhr.setRequestHeader('Content-Type',args.contentType);
 	        xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
 	        
-	        if( isObject(args.headers) ) {
-	            _.keys(args.headers).forEach(function(header){
+	        if( args.headers ) {
+	        	for( var header in args.headers ) {
 	                xhr.setRequestHeader(header,args.headers[header]);
-	            });
+	        	}
 	        }
 	        
 	        xhr.send(args.data);
 		});
 
-		xhr.done = xhr.promise.then;
-		xhr.fail = xhr.promise.catch;
-		xhr.always = xhr.promise.finally;
+		// xhr.done = function (callback) { xhr.promise.then(callback); return xhr; };
+		// xhr.fail = function (callback) { xhr.promise.catch(callback); return xhr; };
+		// xhr.always = function (callback) { xhr.promise.finally(callback); return xhr; };
 
-		return xhr;
+		return xhr.promise;
     }
 
     return ajax;
-});
+}]);

@@ -1,15 +1,15 @@
 {
-  "name": "jcore",
+  "name": "corejs",
   "version": "0.1.0",
   "description": "Basic JS Web Tools",
-  "main": "jcore.min.js",
+  "main": "corejs.min.js",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.10.0",
-    " ": "^0.4.1",
     "grunt-contrib-uglify": "^0.6.0",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-fileserver": "^0.1.27",
     "grunt-injector": "^0.5.4",
     "load-grunt-tasks": "^1.0.0",
     "time-grunt": "^1.0.0"
@@ -19,12 +19,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jstools/jcore.git"
+    "url": "https://github.com/jstools/corejs.git"
   },
   "author": "Jesus Germade <jesus@germade.es>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jstools/jcore/issues"
+    "url": "https://github.com/jstools/corejs/issues"
   },
-  "homepage": "https://github.com/jstools/jcore"
+  "homepage": "https://github.com/jstools/corejs"
 }

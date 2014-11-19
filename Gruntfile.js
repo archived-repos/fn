@@ -16,16 +16,36 @@ module.exports = function(grunt) {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
-        src: 'modules/**/*.js',
+        src: [
+          'modules/fix-ie.js',
+          'modules/log.js',
+          'modules/core.js',
+          'modules/**/*.js'
+        ],
         dest: '<%= pkg.name %>.min.js'
       }
     },
 
     injector: {
       options: {},
-      local_dependencies: {
+      dev: {
         files: {
-          'index.html': ['modules/**/*.js'],
+          'index.html': [
+            'modules/fix-ie.js',
+            'modules/log.js',
+            'modules/core.js',
+            'modules/**/*.js'
+          ],
+        },
+        options: {
+          addRootSlash: false
+        }
+      },
+      dist: {
+        files: {
+          'index.html': [
+            '<%= pkg.main %>'
+          ],
         },
         options: {
           addRootSlash: false
@@ -46,18 +66,33 @@ module.exports = function(grunt) {
       }
     },
 
+    fileserver: {
+      dev: {
+        options: {
+          port: 8080,
+          hostname: '0.0.0.0',
+          root: '.',
+          openInBrowser: true
+        }
+      }
+    },
+
     jshint: {
       all: ['Gruntfile.js', 'modules/**/*.js']
     }
+
   });
 
   // Dev Build
-  grunt.registerTask('dev-build', ['injector', 'uglify']);
+  grunt.registerTask('dev-build', ['injector:dev', 'uglify']);
 
   // Dev Build and Watch
-  grunt.registerTask('dev', ['dev-build', 'watch']);
+  grunt.registerTask('dev', ['dev-build', 'fileserver', 'watch']);
+
+  // Dev Build and Watch
+  grunt.registerTask('dist', ['uglify', 'injector:dist', 'fileserver', 'watch']);
 
   // Default task(s).
-  grunt.registerTask('default', ['dev']);
+  grunt.registerTask('default', ['uglify']);
 
 };
