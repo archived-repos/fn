@@ -17,9 +17,9 @@ module.exports = function(grunt) {
       },
       build: {
         src: [
-          'modules/fix-ie.js',
-          'modules/log.js',
-          'modules/core.js',
+          'core/fix-ie.js',
+          'core/log.js',
+          'core/core.js',
           'modules/**/*.js'
         ],
         dest: '<%= pkg.name %>.min.js'
@@ -31,9 +31,9 @@ module.exports = function(grunt) {
       dev: {
         files: {
           'index.html': [
-            'modules/fix-ie.js',
-            'modules/log.js',
-            'modules/core.js',
+            'core/fix-ie.js',
+            'core/log.js',
+            'core/core.js',
             'modules/**/*.js'
           ],
         },
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
         files: [ '**/*.html' ]
       },
       js: {
-        files: [ 'modules/**/*.js' ],
+        files: [ 'core/**/*.js', 'modules/**/*.js' ],
         tasks: ['dev-build']
       },
       options: {
