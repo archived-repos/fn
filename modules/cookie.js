@@ -35,12 +35,12 @@ fn.define('cookie', function(){
     };
 
     cookie.remove = function (sKey, sPath, sDomain) {
-        if (!this.hasItem(sKey)) { return false; }
+        if (!cookie.hasKey(sKey)) { return false; }
         document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
         return true;
     };
 
-    cookie.has = function (sKey) {
+    cookie.hasKey = function (sKey) {
         if (!sKey) { return false; }
         return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
     };
