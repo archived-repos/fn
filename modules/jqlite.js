@@ -1,4 +1,19 @@
-fn.define('$', [ '_', function (_) {
+
+(function ($) {
+
+  if ( typeof window === 'undefined' ) {
+    if ( typeof module !== 'undefined' ) {
+      module.exports = $;
+    }
+  } else {
+    if ( window.fn ) {
+      fn.define('$', $)
+    } else if( !window.$ ) {
+      window.$ = $;
+    }
+  }
+
+})(function () {
   'use strict';
 
   if( !Element.prototype.matchesSelector ) {
@@ -16,7 +31,7 @@ fn.define('$', [ '_', function (_) {
     else if (window.event && window.event.returnValue) window.eventReturnValue = false;
   }
   
-  function triggerEvent (element,name,args,data){
+  function triggerEvent (element,name,data){
     var event; // The custom event that will be created
     
     if (document.createEvent) {
@@ -28,31 +43,26 @@ fn.define('$', [ '_', function (_) {
       event.data = data;
     }
     
-    event.eventName = name;
-    if( isObject(args) ) {
-      _.keys(args).forEach(function(key){ event[key] = args[key]; });
-    }
-    
     if(document.createEvent) element.dispatchEvent(event);
     else element.fireEvent("on" + event.eventType, event);
     
     return event;
   }
 
-	var RE_HAS_SPACES = /\s/,
+  var RE_HAS_SPACES = /\s/,
       RE_ONLY_LETTERS = /^[a-zA-Z]+$/,
       RE_IS_ID = /^\#.+/,
       RE_IS_CLASS = /^\..+/;
     
   function listDOM(elems){
       if( isString(elems) ) {
-      	if( RE_HAS_SPACES.test(elems) ) [].push.apply(this,document.querySelectorAll(elems));
-      	else {
-      		if( RE_ONLY_LETTERS.test(elems) ) [].push.apply(this,document.getElementsByTagName(elems));
-      		else if( RE_IS_ID.test(elems) ) [].push.call(this,document.getElementById(elems.substr(1)));
-      		else if( RE_IS_CLASS.test(elems) ) [].push.apply(this,document.getElementsByClassName(elems.substr(1)));
-      		else [].push.apply(this,document.querySelectorAll(elems));
-      	}
+        if( RE_HAS_SPACES.test(elems) ) [].push.apply(this,document.querySelectorAll(elems));
+        else {
+          if( RE_ONLY_LETTERS.test(elems) ) [].push.apply(this,document.getElementsByTagName(elems));
+          else if( RE_IS_ID.test(elems) ) [].push.call(this,document.getElementById(elems.substr(1)));
+          else if( RE_IS_CLASS.test(elems) ) [].push.apply(this,document.getElementsByClassName(elems.substr(1)));
+          else [].push.apply(this,document.querySelectorAll(elems));
+        }
       }
       else if( elems instanceof Array ) [].push.apply(this,elems);
       else if( elems instanceof NodeList ) [].push.apply(this,elems);
@@ -64,18 +74,18 @@ fn.define('$', [ '_', function (_) {
   listDOM.prototype = new Array();
   
   listDOM.fn = function(name,elementDo,collectionDo) {
-      if( _.isString(name) ) {
-          if( _.isFunction(elementDo) ) {
+      if( typeof name === 'string' ) {
+          if( elementDo instanceof Function ) {
               if( !Element.prototype[name] ) Element.prototype[name] = elementDo;
           }
-          if( _.isFunction(collectionDo) ) {
+          if( collectionDo instanceof Function ) {
             listDOM.prototype[name] = collectionDo;
             NodeList.prototype[name] = collectionDo;
           }
-      } else if( _.isObject(name) && arguments.length == 1 ) {
-          _.keys(name).forEach(function(key){
-              listDOM.fn(key,name[key].element,name[key].collection);
-          });
+      } else if( name instanceof Object && arguments.length == 1 ) {
+          for( var key in name ) {
+            listDOM.fn(key,name[key].element,name[key].collection);
+          }
       }
   };
   
@@ -107,11 +117,11 @@ fn.define('$', [ '_', function (_) {
      },
      'each': {
           element: function(each){
-              if( isFunction(each) ) each.class(this,this);
+              if( each instanceof Function ) each.class(this,this);
               return this;
           },
           collection: function(each){
-              if( isFunction(each) ) {
+              if( each instanceof Function ) {
                   Array.prototype.forEach.call(this,each);
               }
               return this;
@@ -124,73 +134,73 @@ fn.define('$', [ '_', function (_) {
           collection: function(selector){
               var elems = [];
               
-              if( isFunction(selector) ) {
+              if( selector instanceof Function ) {
                   Array.prototype.forEach.call(this,function(elem){
                       if( selector.apply(elem,[elem]) ) elems.push(elem);
                   });
                   
                   return new listDOM(elems);
                   
-              } else if( _.isString(selector) ) {
+              } else if( typeof selector === 'string' ) {
                   Array.prototype.forEach.call(this,function(elem){
                       if( Element.prototype.matchesSelector.call(elem,selector) ) elems.push(elem);
                   });
                   
                   return new listDOM(elems);
               }
-              return this;
+              return false;
           }
      },
      'children': {
-     		element: false,
-     		collection: function(selector,args){
-     			var elems = [], elem;
-     			
-     			if( document.body.children ) {
-     				
-     				elems = new listDOM();
-     				
-     				Array.prototype.forEach.call(this,function(elem){
-     					[].push.apply(elems,elem.children);
-     				});
-       				
-       			if( selector ) {
-     					if( isString(selector) ) {
-       					elems = elems.filter(selector);
-       				} else if( isFunction(selector) ) elems.each(selector);
-     				}
-     				
-     				return elems;
-     				
-     			} else if( isString(selector) ) {
-     				Array.prototype.forEach.call(this,function(elem){
-     					elem = elem.firstElementChild || elem.firstChild;
-     					
-     					while(elem) {
-                      	if( elem && Element.prototype.matchesSelector.call(elem,selector) ) elems.push(elem);
-                      	elem = elem.nextElementSibling;
-     					}
+        element: false,
+        collection: function(selector,args){
+          var elems = [], elem;
+          
+          if( document.body.children ) {
+            
+            elems = new listDOM();
+            
+            Array.prototype.forEach.call(this,function(elem){
+              [].push.apply(elems,elem.children);
+            });
+              
+            if( selector ) {
+              if( isString(selector) ) {
+                elems = elems.filter(selector);
+              } else if( isFunction(selector) ) elems.each(selector);
+            }
+            
+            return elems;
+            
+          } else if( isString(selector) ) {
+            Array.prototype.forEach.call(this,function(elem){
+              elem = elem.firstElementChild || elem.firstChild;
+              
+              while(elem) {
+                        if( elem && Element.prototype.matchesSelector.call(elem,selector) ) elems.push(elem);
+                        elem = elem.nextElementSibling;
+              }
                   });
-     			} else if( isFunction(selector) ) {
-     				Array.prototype.forEach.call(this,function(elem){
-     					elem = elem.firstElementChild || elem.firstChild;
-     					while(elem) {
-	       				elems.push(elem);
-	       				selector.apply(elem,args);
-	       				elem = elem.nextElementSibling;
-     					}
-     				});
-     			} else {
-     				Array.prototype.forEach.call(this,function(elem){
-     					elem = elem.firstElementChild || elem.firstChild;
-       				while(elem) {
-       					elems.push(elem);
-       					elem = elem.nextElementSibling;
-       				}
-     				});
-     			}
-     			return new listDOM(elems);
-     		}
+          } else if( isFunction(selector) ) {
+            Array.prototype.forEach.call(this,function(elem){
+              elem = elem.firstElementChild || elem.firstChild;
+              while(elem) {
+                elems.push(elem);
+                selector.apply(elem,args);
+                elem = elem.nextElementSibling;
+              }
+            });
+          } else {
+            Array.prototype.forEach.call(this,function(elem){
+              elem = elem.firstElementChild || elem.firstChild;
+              while(elem) {
+                elems.push(elem);
+                elem = elem.nextElementSibling;
+              }
+            });
+          }
+          return new listDOM(elems);
+        }
      },
      'data': {
           element: function(key,value){
@@ -247,7 +257,10 @@ fn.define('$', [ '_', function (_) {
           }
      },
      'addClass': {
-         element: function(className){
+         element: document.createElement('div').classList ? function (className) {
+            this.classList.add(className);
+            return this;
+          } : function(className){
               if(!this.className) this.className = '';
               var patt = new RegExp('\\b'+className+'\\b','');
               if(!patt.test(this.className)) this.className += ' '+className;
@@ -256,7 +269,10 @@ fn.define('$', [ '_', function (_) {
          collection: function(className){ Array.prototype.forEach.call(this,function(item){ item.addClass(className); }); return this; }
      },
      'removeClass': {
-         element: function(className){
+         element: document.createElement('div').classList ? function (className) {
+            this.classList.remove(className);
+            return this;
+          } : function(className){
               if(this.className) {
                   var patt = new RegExp('(\\b|\\s+)'+className+'\\b','g');
                   this.className = this.className.replace(patt,'');
@@ -266,18 +282,19 @@ fn.define('$', [ '_', function (_) {
          collection: function(className){ Array.prototype.forEach.call(this,function(item){ item.addClass(className); }); return this; }
      },
      'hasClass': {
-          element: function(className){
+          element: document.createElement('div').classList ? function (className) {
+            return this.classList.item(className);
+          } : function(className){
               if(!this.className) return false;
               patt = new RegExp('\\b'+className+'\\b','');
               return patt.test(this.className);
           },
           collection: function(className){
-              var classNames = className.trim().split(' ');
-              className = '';
-              classNames.forEach(function(className_part){ className += '.'+className_part; });
-              
-              var found = this.filter(className);
-              return found.length ? found : false;
+            return this.some(function (element) {
+              if( element.hasClass(className) ) {
+                return true;
+              }
+            });
           }
      },
      'parent': {
@@ -297,13 +314,13 @@ fn.define('$', [ '_', function (_) {
          element: function(html){
               this.innerHTML = html;
               this.find('script').each(function(script){
-              	if( script.type == 'text/javascript' ) {
-              		try{ eval('(function(){ \'use strict\';'+script.textContent+'})();'); }catch(err){ console.log(err.message); }
-              	} else if( /^text\/coffee(script)/.test(script.type) && isObject(window.CoffeeScript) ) {
-              		if( CoffeeScript.compile instanceof Function ) {
-              			try{ eval(CoffeeScript.compile(script.textContent)); }catch(err){ console.log(err.message); }
-              		}
-              	}
+                if( script.type == 'text/javascript' ) {
+                  try{ eval('(function(){ \'use strict\';'+script.textContent+'})();'); }catch(err){ console.log(err.message); }
+                } else if( /^text\/coffee(script)/.test(script.type) && isObject(window.CoffeeScript) ) {
+                  if( CoffeeScript.compile instanceof Function ) {
+                    try{ eval(CoffeeScript.compile(script.textContent)); }catch(err){ console.log(err.message); }
+                  }
+                }
               });
               
               return this;
@@ -362,23 +379,23 @@ fn.define('$', [ '_', function (_) {
       },
       'trigger': {
           element: function(event,data){
-              triggerEvent(this,event,false,data);
+              triggerEvent(this, event, data);
           },
           collection: function(event,data){
               Array.prototype.forEach.call(this,function(elem){
-                  triggerEvent(elem,event,false,data);
+                  triggerEvent(elem, event, data);
               });
           }
       }
   });
   
   return function $ (selector){
-  	if( /^\<\w+.*\>$/.test(selector) ) {
-  		var el = document.createElement('div');
-  		el.innerHTML = selector;
-  		return new listDOM(el.children);
-  	}
-  	return new listDOM(selector);
+    if( /^\<\w+.*\>$/.test(selector) ) {
+      var el = document.createElement('div');
+      el.innerHTML = selector;
+      return new listDOM(el.children);
+    }
+    return new listDOM(selector);
   };
   
-}]);
+});

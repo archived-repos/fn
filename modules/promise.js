@@ -40,19 +40,7 @@ fn.define('promise', function (_) {
 
     	throw 'Promise not implemented, fallback needed';
 
-        // promise = function promise (async) {
-        //     var deferred = $q.defer();
-        //     async.call(this, deferred.resolve, deferred.reject);
-        //     return deferred.promise;
-        // }
-
-        // promise.when = function (promise) {
-        //     return $q.when.apply(this, arguments);
-        // };
-
-        // promise.defer = function () {
-        //     return $q.defer();
-        // };
+        // Think about https://github.com/jakearchibald/es6-promise#nodejs
     }
 
     return promise;

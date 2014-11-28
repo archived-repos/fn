@@ -41,7 +41,7 @@ module.exports = function(grunt) {
           addRootSlash: false
         }
       },
-      dist: {
+      min: {
         files: {
           'index.html': [
             '<%= pkg.main %>'
@@ -90,9 +90,12 @@ module.exports = function(grunt) {
   grunt.registerTask('dev', ['dev-build', 'fileserver', 'watch']);
 
   // Dev Build and Watch
-  grunt.registerTask('dist', ['uglify', 'injector:dist', 'fileserver', 'watch']);
+  grunt.registerTask('dev-min', ['uglify', 'injector:min', 'fileserver', 'watch']);
+
+  // Dev Build and Watch
+  grunt.registerTask('build', ['uglify', 'injector:min']);
 
   // Default task(s).
-  grunt.registerTask('default', ['uglify']);
+  grunt.registerTask('default', ['dev']);
 
 };
