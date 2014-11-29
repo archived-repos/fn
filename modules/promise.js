@@ -1,8 +1,12 @@
 fn.define('promise', [ '_', function (_) {
+
+    if( typeof global === 'undefined' ) {
+        var global = window;
+    }
     
     var promise;
 
-    if( window.Promise ) {
+    if( global.Promise ) {
         promise = function promise (async) {
             return new Promise(async);
         }

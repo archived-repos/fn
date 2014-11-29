@@ -1,5 +1,5 @@
 {
-  "name": "jstools-core",
+  "name": "jstool-core",
   "version": "0.1.5",
   "description": "Basic JS Web Tools",
   "main": "corejs.min.js",

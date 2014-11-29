@@ -1,112 +1,81 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'publish' ]
+1 verbose cli [ '/usr/bin/node',
+1 verbose cli   '/usr/bin/npm',
+1 verbose cli   'unpublish',
+1 verbose cli   'jstools-core',
+1 verbose cli   '--force' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.33
 4 verbose node symlink /usr/bin/node
-5 verbose publish [ '.' ]
-6 verbose cache add [ '.', null ]
-7 verbose cache add name=undefined spec="." args=[".",null]
-8 verbose parsed url { protocol: null,
-8 verbose parsed url   slashes: null,
-8 verbose parsed url   auth: null,
-8 verbose parsed url   host: null,
-8 verbose parsed url   port: null,
-8 verbose parsed url   hostname: null,
-8 verbose parsed url   hash: null,
-8 verbose parsed url   search: null,
-8 verbose parsed url   query: null,
-8 verbose parsed url   pathname: '.',
-8 verbose parsed url   path: '.',
-8 verbose parsed url   href: '.' }
-9 silly lockFile 3a52ce78- .
-10 verbose lock . /home/joshua/.npm/3a52ce78-.lock
-11 verbose tar pack [ '/home/joshua/.npm/corejs/0.1.1/package.tgz', '.' ]
-12 verbose tarball /home/joshua/.npm/corejs/0.1.1/package.tgz
-13 verbose folder .
-14 info prepublish corejs@0.1.1
-15 silly lockFile 1f1177db-tar tar://.
-16 verbose lock tar://. /home/joshua/.npm/1f1177db-tar.lock
-17 silly lockFile 10568fdf-hua-npm-corejs-0-1-1-package-tgz tar:///home/joshua/.npm/corejs/0.1.1/package.tgz
-18 verbose lock tar:///home/joshua/.npm/corejs/0.1.1/package.tgz /home/joshua/.npm/10568fdf-hua-npm-corejs-0-1-1-package-tgz.lock
-19 silly lockFile 1f1177db-tar tar://.
-20 silly lockFile 1f1177db-tar tar://.
-21 silly lockFile 10568fdf-hua-npm-corejs-0-1-1-package-tgz tar:///home/joshua/.npm/corejs/0.1.1/package.tgz
-22 silly lockFile 10568fdf-hua-npm-corejs-0-1-1-package-tgz tar:///home/joshua/.npm/corejs/0.1.1/package.tgz
-23 silly lockFile caaad1e1--joshua-npm-corejs-0-1-1-package /home/joshua/.npm/corejs/0.1.1/package
-24 verbose lock /home/joshua/.npm/corejs/0.1.1/package /home/joshua/.npm/caaad1e1--joshua-npm-corejs-0-1-1-package.lock
-25 silly lockFile caaad1e1--joshua-npm-corejs-0-1-1-package /home/joshua/.npm/corejs/0.1.1/package
-26 silly lockFile caaad1e1--joshua-npm-corejs-0-1-1-package /home/joshua/.npm/corejs/0.1.1/package
-27 silly lockFile 3a52ce78- .
-28 silly lockFile 3a52ce78- .
-29 silly publish { name: 'corejs',
-29 silly publish   version: '0.1.1',
-29 silly publish   description: 'Basic JS Web Tools',
-29 silly publish   main: 'corejs.min.js',
-29 silly publish   dependencies: {},
-29 silly publish   devDependencies:
-29 silly publish    { grunt: '^0.4.5',
-29 silly publish      'grunt-contrib-jshint': '^0.10.0',
-29 silly publish      'grunt-contrib-uglify': '^0.6.0',
-29 silly publish      'grunt-contrib-watch': '^0.6.1',
-29 silly publish      'grunt-fileserver': '^0.1.27',
-29 silly publish      'grunt-injector': '^0.5.4',
-29 silly publish      'load-grunt-tasks': '^1.0.0',
-29 silly publish      'time-grunt': '^1.0.0' },
-29 silly publish   scripts: { test: '' },
-29 silly publish   repository: { type: 'git', url: 'https://github.com/jstools/corejs.git' },
-29 silly publish   author: { name: 'Jesus Germade', email: 'jesus@germade.es' },
-29 silly publish   license: 'ISC',
-29 silly publish   bugs: { url: 'https://github.com/jstools/corejs/issues' },
-29 silly publish   homepage: 'https://github.com/jstools/corejs',
-29 silly publish   readme: 'Copyright (c) 2014, Jesús Manuel Germade Castiñeiras <jesus@germade.es>\n\nPermission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.\n\nTHE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.',
-29 silly publish   readmeFilename: 'README.md',
-29 silly publish   gitHead: 'f55067a962e61f8a5fc6efb1d89c602906764f74',
-29 silly publish   _id: 'corejs@0.1.1',
-29 silly publish   _shasum: '29216bc8e8e0e1abdcb13b289208c5909776bbd1',
-29 silly publish   _from: '.' }
-30 verbose request where is /corejs
-31 verbose request registry https://registry.npmjs.org/
-32 verbose request id 7768fa61cd4f8822
-33 verbose url raw /corejs
-34 verbose url resolving [ 'https://registry.npmjs.org/', './corejs' ]
-35 verbose url resolved https://registry.npmjs.org/corejs
-36 verbose request where is https://registry.npmjs.org/corejs
-37 info trying registry request attempt 1 at 01:01:51
-38 http PUT https://registry.npmjs.org/corejs
-39 http 403 https://registry.npmjs.org/corejs
-40 verbose headers { date: 'Thu, 20 Nov 2014 00:01:52 GMT',
-40 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-40 verbose headers   'content-type': 'application/json',
-40 verbose headers   'cache-control': 'max-age=60',
-40 verbose headers   'content-length': '6697',
-40 verbose headers   'accept-ranges': 'bytes',
-40 verbose headers   via: '1.1 varnish',
-40 verbose headers   'x-served-by': 'cache-lcy1120-LCY',
-40 verbose headers   'x-cache': 'MISS',
-40 verbose headers   'x-cache-hits': '0',
-40 verbose headers   'x-timer': 'S1416441711.794556,VS0,VE308',
-40 verbose headers   'keep-alive': 'timeout=10, max=50',
-40 verbose headers   connection: 'Keep-Alive' }
-41 error publish Failed PUT 403
-42 error Error: forbidden cannot modify pre-existing version: 0.1.1
-42 error old={"name":"corejs","version":"0.1.1","description":"CoreJS ===========","main":"index.js","dependencies":{"easydb":"~0.x.x","lodash":"~1.0.1","backbone":"1.0.0","async":"~0.2.7"},"devDependencies":{},"scripts":{"test":"echo \"Error: no test specified\" && exit 1"},"repository":"","keywords":["sql","nodejs","node","backbone"],"author":{"name":"Chris Houghton"},"license":"GNU","readme":"CoreJS\u000a===========\u000a\u000aA NodeJS &amp; SQL framework built from Backbone. Designed to provide a framework for your back-end data-model so you can focus on other more interesting things like making pretty user interfaces.\u000a\u000a<b>NOTE: This framework is still in development and not ready for alpha use.</b>\u000a\u000a\u000a# Models &amp; Collections\u000a\u000a## Models\u000a\u000aModels directly relate to a single row within a database table.\u000a\u000aExample model:\u000a\u000a```\u000avar User = Core.Model.extend({\u000a  name: 'user'\u000a});\u000a```\u000a\u000aThe `User` model above relates to the `users` table in the database. (Table name = `name + 's'`) \u000aFor every user there is one \"app\", probably contained within the `apps` table, controlled through \u000aanother model. It also has many email addresses models.\u000a\u000a\u000a## Collections\u000a\u000aCollections relate to a list of models.\u000a\u000a```\u000avar Users = Core.Collection.extend({\u000a  name: 'users'\u000a});\u000a```\u000a\u000aThe `Users` collection also relates to the `users` table in the database. Note the difference here:\u000aa `User` model is named 'user', while the collection is named 'users'. This is standard naming\u000aconvention in CoreJS.\u000a\u000a\u000a# Relations\u000a\u000aThe complexities arising from table relations was the primary reason for building CoreJS. The aim\u000ais to provide a simple interface to get/save/delete data in the database, without having to write\u000ahorrific queries every time you want to do something relatively simple.\u000a\u000aThe central control of relations is set in the model/collection configuration, through the `subObjects`\u000aand `subArrays` parameters. For example:\u000a\u000a```\u000avar User = Core.Model.extend({\u000a  name: 'user'.\u000a  subObjects: {\u000a    picture: UserPicture  // the UserPicture model\u000a  }\u000a}\u000a});\u000a```\u000a\u000aThe `subObjects` parameter indicates that within the user row fetched from the database, an object \u000acalled `picture` should exist, containing the one user picture that belongs to the user.\u000a\u000a```\u000avar userModel = new UserModel({ id: 91 });\u000auserModel.on('fetch', function() {\u000a  \u000a  // The userModel attributes are:\u000a  {\u000a    name: 'chris',\u000a    email: 'test@testing123.com',\u000a    password: '12356',\u000a    id: 132,\u000a    verified: 0,\u000a    added: Sat Apr 27 2013 13: 09: 55 GMT + 0100(BST)\u000a  }\u000a\u000a}).fetch();\u000a```\u000a\u000aBy default, fetch and save calls do not get children. If you wanted to get the picture too, specify\u000athe `withChildren` option as `true` within the fetch options.\u000a\u000a```\u000avar userModel = new UserModel({ id: 91 });\u000auserModel.on('fetch', function() {\u000a  \u000a  // The userModel attributes are:\u000a  {\u000a    name: 'chris',\u000a    email: 'test@testing123.com',\u000a    password: '12356',\u000a    picture: {\u000a      id: 17,\u000a      user_id: 132,\u000a      path: 'http://myimagepath.com',\u000a      description: 'my test profile pic',\u000a      added: Sat Apr 27 2013 13: 09: 55 GMT + 0100(BST)\u000a    },\u000a    id: 132,\u000a    verified: 0,\u000a    added: Sat Apr 27 2013 13: 09: 55 GMT + 0100(BST)\u000a  }\u000a\u000a}).fetch({ withChildren: true });\u000a```\u000a\u000a# Core functions\u000a\u000a## Getting\u000a\u000a```\u000avar userModel = new UserModel({ id: 91 });\u000auserModel.on('fetch', function() {\u000a  console.log(userModel.toJSON());\u000a}).fetch();\u000a```\u000a\u000a\u000a","readmeFilename":"README.md","_id":"corejs@0.1.1","dist":{"shasum":"da2562cad5e41383bd8a7462ff9b133ff618894a","tarball":"http://registry.npmjs.org/corejs/-/corejs-0.1.1.tgz"},"_from":".","_npmVersion":"1.2.2","_npmUser":{"name":"chrishoughton","email":"chris.john.houghton@gmail.com"},"maintainers":[{"name":"chrishoughton","email":"chris.john.houghton@gmail.com"}]}
-42 error new={"name":"corejs","version":"0.1.1","description":"Basic JS Web Tools","main":"corejs.min.js","dependencies":{},"devDependencies":{"grunt":"^0.4.5","grunt-contrib-jshint":"^0.10.0","grunt-contrib-uglify":"^0.6.0","grunt-contrib-watch":"^0.6.1","grunt-fileserver":"^0.1.27","grunt-injector":"^0.5.4","load-grunt-tasks":"^1.0.0","time-grunt":"^1.0.0"},"scripts":{"test":""},"repository":{"type":"git","url":"https://github.com/jstools/corejs.git"},"author":{"name":"Jesus Germade","email":"jesus@germade.es"},"license":"ISC","bugs":{"url":"https://github.com/jstools/corejs/issues"},"homepage":"https://github.com/jstools/corejs","readme":"Copyright (c) 2014, Jesús Manuel Germade Castiñeiras <jesus@germade.es>\u000a\u000aPermission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.\u000a\u000aTHE SOFTWARE IS PROVIDED \"AS IS\" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.","readmeFilename":"README.md","gitHead":"f55067a962e61f8a5fc6efb1d89c602906764f74","_id":"corejs@0.1.1","_shasum":"29216bc8e8e0e1abdcb13b289208c5909776bbd1","_from":".","_npmVersion":"1.4.28","_npmUser":{"name":"jgermade","email":"jesus@germade.es"},"maintainers":[{"name":"jgermade","email":"jesus@germade.es"}],"dist":{"shasum":"29216bc8e8e0e1abdcb13b289208c5909776bbd1","tarball":"http://registry.npmjs.org/corejs/-/corejs-0.1.1.tgz"}}: corejs
-42 error     at RegClient.<anonymous> (/usr/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:308:14)
-42 error     at Request._callback (/usr/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:246:65)
-42 error     at Request.self.callback (/usr/lib/node_modules/npm/node_modules/request/request.js:236:22)
-42 error     at Request.emit (events.js:98:17)
-42 error     at Request.<anonymous> (/usr/lib/node_modules/npm/node_modules/request/request.js:1142:14)
-42 error     at Request.emit (events.js:117:20)
-42 error     at IncomingMessage.<anonymous> (/usr/lib/node_modules/npm/node_modules/request/request.js:1096:12)
-42 error     at IncomingMessage.emit (events.js:117:20)
-42 error     at _stream_readable.js:943:16
-42 error     at process._tickCallback (node.js:419:13)
-43 error If you need help, you may report this *entire* log,
-43 error including the npm and node versions, at:
-43 error     <http://github.com/npm/npm/issues>
-44 error System Linux 3.13.0-39-generic
-45 error command "/usr/bin/node" "/usr/bin/npm" "publish"
-46 error cwd /home/joshua/dev/corejs
-47 error node -v v0.10.33
-48 error npm -v 1.4.28
-49 verbose exit [ 1, true ]
+5 warn using --force I sure hope you know what you are doing.
+6 verbose request where is /jstools-core?write=true
+7 verbose request registry https://registry.npmjs.org/
+8 verbose request id 8e601e01c28f7ea1
+9 verbose url raw /jstools-core?write=true
+10 verbose url resolving [ 'https://registry.npmjs.org/', './jstools-core?write=true' ]
+11 verbose url resolved https://registry.npmjs.org/jstools-core?write=true
+12 verbose request where is https://registry.npmjs.org/jstools-core?write=true
+13 info trying registry request attempt 1 at 11:59:17
+14 http GET https://registry.npmjs.org/jstools-core?write=true
+15 http 404 https://registry.npmjs.org/jstools-core?write=true
+16 silly registry.get cb [ 404,
+16 silly registry.get   { date: 'Sat, 29 Nov 2014 10:59:18 GMT',
+16 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+16 silly registry.get     etag: '"8298FJSOIFL45DI3LG14E1XQ"',
+16 silly registry.get     'content-type': 'application/json',
+16 silly registry.get     'cache-control': 'max-age=0',
+16 silly registry.get     'content-length': '524',
+16 silly registry.get     'accept-ranges': 'bytes',
+16 silly registry.get     via: '1.1 varnish',
+16 silly registry.get     age: '0',
+16 silly registry.get     'x-served-by': 'cache-lcy1121-LCY',
+16 silly registry.get     'x-cache': 'MISS',
+16 silly registry.get     'x-cache-hits': '0',
+16 silly registry.get     'x-timer': 'S1417258758.160742,VS0,VE594',
+16 silly registry.get     vary: 'Accept',
+16 silly registry.get     'keep-alive': 'timeout=10, max=50',
+16 silly registry.get     connection: 'Keep-Alive' } ]
+17 info unpublish No version specified, removing all
+18 verbose request where is /jstools-core/-rev/7-dea6428f236c02b7c910527e3122bbb5
+19 verbose request registry https://registry.npmjs.org/
+20 verbose url raw /jstools-core/-rev/7-dea6428f236c02b7c910527e3122bbb5
+21 verbose url resolving [ 'https://registry.npmjs.org/',
+21 verbose url resolving   './jstools-core/-rev/7-dea6428f236c02b7c910527e3122bbb5' ]
+22 verbose url resolved https://registry.npmjs.org/jstools-core/-rev/7-dea6428f236c02b7c910527e3122bbb5
+23 verbose request where is https://registry.npmjs.org/jstools-core/-rev/7-dea6428f236c02b7c910527e3122bbb5
+24 info trying registry request attempt 1 at 11:59:18
+25 http DELETE https://registry.npmjs.org/jstools-core/-rev/7-dea6428f236c02b7c910527e3122bbb5
+26 http 403 https://registry.npmjs.org/jstools-core/-rev/7-dea6428f236c02b7c910527e3122bbb5
+27 verbose headers { date: 'Sat, 29 Nov 2014 10:59:19 GMT',
+27 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+27 verbose headers   'content-type': 'application/json',
+27 verbose headers   'cache-control': 'max-age=60',
+27 verbose headers   'content-length': '53',
+27 verbose headers   'accept-ranges': 'bytes',
+27 verbose headers   via: '1.1 varnish',
+27 verbose headers   'x-served-by': 'cache-lcy1127-LCY',
+27 verbose headers   'x-cache': 'MISS',
+27 verbose headers   'x-cache-hits': '0',
+27 verbose headers   'x-timer': 'S1417258759.078717,VS0,VE156',
+27 verbose headers   'keep-alive': 'timeout=10, max=50',
+27 verbose headers   connection: 'Keep-Alive' }
+28 error Error: forbidden already unpublished: jstools-core/-rev/7-dea6428f236c02b7c910527e3122bbb5
+28 error     at RegClient.<anonymous> (/usr/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:308:14)
+28 error     at Request._callback (/usr/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:246:65)
+28 error     at Request.self.callback (/usr/lib/node_modules/npm/node_modules/request/request.js:236:22)
+28 error     at Request.emit (events.js:98:17)
+28 error     at Request.<anonymous> (/usr/lib/node_modules/npm/node_modules/request/request.js:1142:14)
+28 error     at Request.emit (events.js:117:20)
+28 error     at IncomingMessage.<anonymous> (/usr/lib/node_modules/npm/node_modules/request/request.js:1096:12)
+28 error     at IncomingMessage.emit (events.js:117:20)
+28 error     at _stream_readable.js:943:16
+28 error     at process._tickCallback (node.js:419:13)
+29 error If you need help, you may report this *entire* log,
+29 error including the npm and node versions, at:
+29 error     <http://github.com/npm/npm/issues>
+30 error System Linux 3.13.0-39-generic
+31 error command "/usr/bin/node" "/usr/bin/npm" "unpublish" "jstools-core" "--force"
+32 error cwd /home/joshua/dev/corejs
+33 error node -v v0.10.33
+34 error npm -v 1.4.28
+35 verbose exit [ 1, true ]

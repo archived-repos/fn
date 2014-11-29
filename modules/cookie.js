@@ -1,3 +1,7 @@
+
+// cookies.js library from https://developer.mozilla.org/en-US/docs/Web/API/document.cookie
+// adapted to be used with jstools-core
+
 fn.define('cookie', function(){
     'use strict';
 
