@@ -11,6 +11,12 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
+    clean: {
+      tmp: {
+        src: [ ".tmp" ]
+      }
+    },
+
     concat: {
       options: {
         separator: ';',
@@ -28,7 +34,8 @@ module.exports = function(grunt) {
     copy: {
       'index-tmp': {
         src: 'test/index.html',
-        dest: '.tmp/',
+        dest: '.tmp/index.html',
+        flatten: true
       },
       'core-tmp': {
         expand: true,
@@ -82,16 +89,17 @@ module.exports = function(grunt) {
       options: {},
       tmp: {
         files: {
-          'index.html': [
-            'dist/core.min.js',
-            'dist/*.min.js',
-            'core/fix-ie.js',
-            'core/log.js',
-            'core/fn.js',
-            'modules/**/*.js'
+          '.tmp/index.html': [
+            '.tmp/core.min.js',
+            '.tmp/*.min.js',
+            '.tmp/core/fix-ie.js',
+            '.tmp/core/log.js',
+            '.tmp/core/fn.js',
+            '.tmp/modules/**/*.js'
           ],
         },
         options: {
+          ignorePath: '.tmp',
           addRootSlash: false
         }
       }
@@ -115,7 +123,7 @@ module.exports = function(grunt) {
         options: {
           port: 8080,
           hostname: '0.0.0.0',
-          root: '.',
+          root: '.tmp',
           openInBrowser: true
         }
       }
@@ -130,16 +138,16 @@ module.exports = function(grunt) {
   grunt.registerTask('index-serve-watch', [ 'copy:index-tmp', 'injector:tmp', 'fileserver', 'watch' ])
 
   // Dev Build
-  grunt.registerTask('dev-build', [ 'copy:core-tmp', 'copy:modules-tmp', 'index-serve-watch' ]);
+  grunt.registerTask('dev-build', [ 'clean:tmp', 'copy:core-tmp', 'copy:modules-tmp', 'index-serve-watch' ]);
 
   // Dev Build and Watch
-  grunt.registerTask('dev-min', [ 'uglify:core-tmp', 'uglify:modules-tmp', 'index-serve-watch' ]);
+  grunt.registerTask('dev-min', [ 'clean:tmp', 'uglify:core-tmp', 'uglify:modules-tmp', 'index-serve-watch' ]);
 
   // Dev Build and Watch
   grunt.registerTask('dev', ['dev-build']);
 
   // Dev Build and Watch
-  grunt.registerTask('build', [ 'uglify:core-dist' ]);
+  grunt.registerTask('build', [ 'uglify:core-dist', 'concat:dist' ]);
 
   // Default task(s).
   grunt.registerTask('default', ['dev']);

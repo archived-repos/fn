@@ -2,15 +2,16 @@
   "name": "jstool-core",
   "version": "0.1.6",
   "description": "Basic JS Web Tools",
-  "main": "dist/core.min.js",
+  "main": "core.min.js",
   "jstool": "dist/core.js",
   "dependencies": {
     "jqlite": "0.0.3"
   },
   "devDependencies": {
     "grunt": "latest",
-    "grunt-contrib-concat": "^0.5.0",
-    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-clean": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-copy": "latest",
     "grunt-contrib-jshint": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-watch": "latest",
