@@ -1,18 +1,20 @@
 fn.define('Scope', function () {
     function Scope (scp) {
-        for( key in scp ) {
+        for( var key in scp ) {
             this[key] = scp[key];
         }
     }
 
     function newScope (scp) {
         function S (scp) {
-            for( key in scp ) {
+            for( var key in scp ) {
                 this[key] = scp[key];
             }
         }
         S.prototype = this;
-        S.prototype.$new = newScope;
+        for( var key in Scope.prototype ) {
+            S.prototype[key] = Scope.prototype[key];
+        }
         return new S(scp);
     }
 
