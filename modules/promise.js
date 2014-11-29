@@ -1,4 +1,4 @@
-fn.define('promise', function (_) {
+fn.define('promise', [ '_', function (_) {
     
     var promise;
 
@@ -44,4 +44,4 @@ fn.define('promise', function (_) {
     }
 
     return promise;
-});
+}]);

@@ -1,9 +1,11 @@
 {
   "name": "corejs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Basic JS Web Tools",
   "main": "corejs.min.js",
-  "dependencies": {},
+  "dependencies": {
+    "jqlite": "0.0.3"
+  },
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.10.0",
