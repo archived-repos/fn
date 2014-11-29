@@ -54,8 +54,12 @@
     		}
     	},
     	keys: Object.keys,
-    	global: function (varName, o) {
-    		(typeof window === 'undefined' ? module.exports : window)[varName] = o;
+    	globalize: function (varName, o) {
+    		if( o ) {
+    			(typeof window === 'undefined' ? module.exports : window)[varName] = o;
+    		} else {
+    			(typeof window === 'undefined' ? module.exports : window)[varName] = definitions[varName];
+    		}
     	}
 	};
 
@@ -201,6 +205,8 @@
 		}	
 	};
 
-	_.global('fn', fn);
+	fn.globalize = _.globalize;
+
+	_.globalize('fn', fn);
 
 })();

@@ -15,14 +15,19 @@ module.exports = function(grunt) {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
-      build: {
+      core: {
         src: [
           'core/fix-ie.js',
           'core/log.js',
-          'core/core.js',
-          'modules/**/*.js'
+          'core/fn.js'
         ],
         dest: '<%= pkg.name %>.min.js'
+      },
+      modules: {
+        src: [
+          'modules/**/*.js'
+        ],
+        dest: 'modules.min.js'
       }
     },
 
@@ -33,7 +38,7 @@ module.exports = function(grunt) {
           'index.html': [
             'core/fix-ie.js',
             'core/log.js',
-            'core/core.js',
+            'core/fn.js',
             'modules/**/*.js'
           ],
         },
@@ -44,7 +49,8 @@ module.exports = function(grunt) {
       min: {
         files: {
           'index.html': [
-            '<%= pkg.main %>'
+            '<%= pkg.main %>',
+            '*.min.js'
           ],
         },
         options: {

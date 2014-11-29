@@ -55,7 +55,7 @@
       RE_IS_CLASS = /^\..+/;
     
   function listDOM(elems){
-      if( isString(elems) ) {
+      if( typeof elems === 'string' ) {
         if( RE_HAS_SPACES.test(elems) ) [].push.apply(this,document.querySelectorAll(elems));
         else {
           if( RE_ONLY_LETTERS.test(elems) ) [].push.apply(this,document.getElementsByTagName(elems));
@@ -117,12 +117,14 @@
      },
      'each': {
           element: function(each){
-              if( each instanceof Function ) each.class(this,this);
+              if( each instanceof Function ) each.call(this,this);
               return this;
           },
           collection: function(each){
               if( each instanceof Function ) {
-                  Array.prototype.forEach.call(this,each);
+                for( var i = 0, len = this.length, elem; i < len ; i++ ) {
+                    each.call(this[i], this[i]);
+                }
               }
               return this;
           }
@@ -135,16 +137,18 @@
               var elems = [];
               
               if( selector instanceof Function ) {
-                  Array.prototype.forEach.call(this,function(elem){
-                      if( selector.apply(elem,[elem]) ) elems.push(elem);
-                  });
+                for( var i = 0, len = this.length, elem; i < len ; i++ ) {
+                    elem = this[i];
+                    if( selector.apply(elem,[elem]) ) elems.push(elem);
+                }
                   
-                  return new listDOM(elems);
+                return new listDOM(elems);
                   
               } else if( typeof selector === 'string' ) {
-                  Array.prototype.forEach.call(this,function(elem){
-                      if( Element.prototype.matchesSelector.call(elem,selector) ) elems.push(elem);
-                  });
+                  for( var i = 0, len = this.length, elem; i < len ; i++ ) {
+                    elem = this[i];
+                    if( Element.prototype.matchesSelector.call(elem,selector) ) elems.push(elem);
+                  }
                   
                   return new listDOM(elems);
               }
@@ -225,8 +229,10 @@
               
                   if( !isString(value) ) return this[0].data(key);
                   else {
-                      Array.prototype.forEach.call(this,function(elem){ elem.data(key,value); });
-                      return this;
+                    for( var i = 0, len = this.length; i < len ; i++ ) {
+                        this[i].data(key,value);
+                    }
+                    return this;
                   }
               }
               return this;
@@ -249,8 +255,10 @@
               
                   if( !isString(value) ) return this[0].getAttribute(key);
                   else {
-                      Array.prototype.forEach.call(this,function(elem){ elem.setAttribute(key,value); });
-                      return this;
+                    for( var i = 0, len = this.length; i < len ; i++ ) {
+                        this[i].setAttribute(key,value);
+                    }
+                    return this;
                   }
               }
               return this;
@@ -266,36 +274,47 @@
               if(!patt.test(this.className)) this.className += ' '+className;
               return this;
          },
-         collection: function(className){ Array.prototype.forEach.call(this,function(item){ item.addClass(className); }); return this; }
+         collection: function(className){
+            for( var i = 0, len = this.length; i < len ; i++ ) {
+                this[i].addClass(className);
+            }
+            return this;
+        }
      },
      'removeClass': {
-         element: document.createElement('div').classList ? function (className) {
+        element: document.createElement('div').classList ? function (className) {
             this.classList.remove(className);
             return this;
-          } : function(className){
-              if(this.className) {
-                  var patt = new RegExp('(\\b|\\s+)'+className+'\\b','g');
-                  this.className = this.className.replace(patt,'');
-              }
-              return this;
-         },
-         collection: function(className){ Array.prototype.forEach.call(this,function(item){ item.addClass(className); }); return this; }
+        } : function(className){
+            if(this.className) {
+                var patt = new RegExp('(\\b|\\s+)'+className+'\\b','g');
+                this.className = this.className.replace(patt,'');
+            }
+            return this;
+        },
+        collection: function(className){
+            for( var i = 0, len = this.length; i < len ; i++ ) {
+                this[i].removeClass(className);
+            }
+            return this;
+        }
      },
      'hasClass': {
-          element: document.createElement('div').classList ? function (className) {
+        element: document.createElement('div').classList ? function (className) {
             return this.classList.item(className);
-          } : function(className){
-              if(!this.className) return false;
-              patt = new RegExp('\\b'+className+'\\b','');
-              return patt.test(this.className);
-          },
-          collection: function(className){
-            return this.some(function (element) {
-              if( element.hasClass(className) ) {
-                return true;
-              }
-            });
-          }
+        } : function(className){
+            if(!this.className) return false;
+            patt = new RegExp('\\b'+className+'\\b','');
+            return patt.test(this.className);
+        },
+        collection: function(className){
+            for( var i = 0, len = this.length; i < len ; i++ ) {
+                if( element.hasClass(className) ) {
+                    return true;
+                }
+            }
+            return false;
+        }
      },
      'parent': {
          element: function(){
@@ -303,11 +322,14 @@
               return this.parentElement || this.parentNode;
          },
          collection: function(){
-             var items = new listDOM(), parent;
-             
-             Array.prototype.forEach.call(this,function(item){ parent = item.parent(); if(parent) items.push(parent); });
-             
-             return items;
+            var items = new listDOM(), parent;
+            
+            for( var i = 0, len = this.length; i < len ; i++ ) {
+                parent = this[i].parent();
+                if(parent) items.push(parent);
+            }
+            
+            return items;
          }
      },
      'render': {
@@ -326,9 +348,35 @@
               return this;
          },
          collection: function(html){
-             Array.prototype.forEach.call(this,function(item){ item.render(html); });
-             return this;
+            for( var i = 0, len = this.length; i < len ; i++ ) {
+              this[i].render(html);
+            }
+            return this;
          }
+      },
+      'text': {
+        element: function (text) {
+          if( text === undefined ) {
+            return this.textContent;
+          } else {
+            this.textContent = text;
+            return this;
+          }
+        },
+        collection: function (text) {
+            if( text === undefined ) {
+                text = '';
+                for( var i = 0, len = this.length; i < len ; i++ ) {
+                  text += this[i].textContent;
+                }
+                return text;
+            } else {
+                for( var i = 0, len = this.length; i < len ; i++ ) {
+                  this[i].textContent = text;
+                }
+            }
+            return this;
+        }
       },
       'on':{
           element: function(event,handler){
