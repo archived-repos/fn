@@ -21,7 +21,7 @@ module.exports = function(grunt) {
           'core/log.js',
           'core/fn.js'
         ],
-        dest: '<%= pkg.name %>.min.js'
+        dest: 'corejs.min.js'
       },
       modules: {
         src: [
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
       min: {
         files: {
           'index.html': [
-            '<%= pkg.main %>',
+            'corejs.min.js',
             '*.min.js'
           ],
         },
