@@ -11,46 +11,84 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
-    uglify: {
+    concat: {
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        separator: ';',
       },
-      core: {
+      dist: {
         src: [
           'core/fix-ie.js',
           'core/log.js',
           'core/fn.js'
         ],
-        dest: 'corejs.min.js'
+        dest: 'dist/core.js',
       },
-      modules: {
+    },
+
+    copy: {
+      'index-tmp': {
+        src: 'test/index.html',
+        dest: '.tmp/',
+      },
+      'core-tmp': {
+        expand: true,
+        cwd: 'core',
+        src: '**',
+        dest: '.tmp/core'
+      },
+      'modules-tmp': {
+        expand: true,
+        cwd: 'modules',
+        src: '**',
+        dest: '.tmp/modules'
+      }
+    },
+
+    uglify: {
+      options: {
+        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+      },
+      'core-tmp': {
+        src: [
+          'core/fix-ie.js',
+          'core/log.js',
+          'core/fn.js'
+        ],
+        dest: '.tmp/core.min.js'
+      },
+      'modules-tmp': {
         src: [
           'modules/**/*.js'
         ],
-        dest: 'modules.min.js'
+        dest: '.tmp/modules.min.js'
+      },
+      'core-dist': {
+        src: [
+          'core/fix-ie.js',
+          'core/log.js',
+          'core/fn.js'
+        ],
+        dest: 'dist/core.min.js'
+      },
+      'modules-dist': {
+        src: [
+          'modules/**/*.js'
+        ],
+        dest: 'dist/modules.min.js'
       }
     },
 
     injector: {
       options: {},
-      dev: {
+      tmp: {
         files: {
           'index.html': [
+            'dist/core.min.js',
+            'dist/*.min.js',
             'core/fix-ie.js',
             'core/log.js',
             'core/fn.js',
             'modules/**/*.js'
-          ],
-        },
-        options: {
-          addRootSlash: false
-        }
-      },
-      min: {
-        files: {
-          'index.html': [
-            'corejs.min.js',
-            '*.min.js'
           ],
         },
         options: {
@@ -89,17 +127,19 @@ module.exports = function(grunt) {
 
   });
 
+  grunt.registerTask('index-serve-watch', [ 'copy:index-tmp', 'injector:tmp', 'fileserver', 'watch' ])
+
   // Dev Build
-  grunt.registerTask('dev-build', ['injector:dev', 'uglify']);
+  grunt.registerTask('dev-build', [ 'copy:core-tmp', 'copy:modules-tmp', 'index-serve-watch' ]);
 
   // Dev Build and Watch
-  grunt.registerTask('dev', ['dev-build', 'fileserver', 'watch']);
+  grunt.registerTask('dev-min', [ 'uglify:core-tmp', 'uglify:modules-tmp', 'index-serve-watch' ]);
 
   // Dev Build and Watch
-  grunt.registerTask('dev-min', ['uglify', 'injector:min', 'fileserver', 'watch']);
+  grunt.registerTask('dev', ['dev-build']);
 
   // Dev Build and Watch
-  grunt.registerTask('build', ['uglify', 'injector:min']);
+  grunt.registerTask('build', [ 'uglify:core-dist' ]);
 
   // Default task(s).
   grunt.registerTask('default', ['dev']);
