@@ -1,13 +1,8 @@
 {
   "name": "jstool-core",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Basic JS Web Tools",
-  "main": "dist/core.min.js",
-  "jstool": [
-    "core/fix-ie.js",
-    "core/log.js",
-    "core/fn.js"
-  ],
+  "main": "dist/core.js",
   "dependencies": {},
   "devDependencies": {
     "grunt": "latest",
