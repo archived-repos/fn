@@ -53,10 +53,6 @@ fn.define('ajax', ['promise', function (promise) {
 	        xhr.send(args.data);
 		});
 
-		// xhr.done = function (callback) { xhr.promise.then(callback); return xhr; };
-		// xhr.fail = function (callback) { xhr.promise.catch(callback); return xhr; };
-		// xhr.always = function (callback) { xhr.promise.finally(callback); return xhr; };
-
 		return xhr.promise;
     }
 
