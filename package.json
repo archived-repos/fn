@@ -1,6 +1,6 @@
 {
   "name": "jstool-core",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Basic JS Web Tools",
   "main": "dist/core.min.js",
   "jstool": [
@@ -8,9 +8,7 @@
     "core/log.js",
     "core/fn.js"
   ],
-  "dependencies": {
-    "jqlite": "0.0.3"
-  },
+  "dependencies": {},
   "devDependencies": {
     "grunt": "latest",
     "grunt-contrib-clean": "latest",

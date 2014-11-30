@@ -1,4 +1,4 @@
-fn.define('widgets', function () {
+fn.define('widgets', function ($) {
     var jDoc = $(document),
         plugins = {},
         pluginSets = {};
