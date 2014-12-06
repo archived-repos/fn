@@ -28,7 +28,7 @@ module.exports = function(grunt) {
           'core/log.js',
           'core/fn.js'
         ],
-        dest: 'dist/core.js',
+        dest: 'core.js',
       },
     },
 
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
           'core/log.js',
           'core/fn.js'
         ],
-        dest: 'dist/core.min.js'
+        dest: 'core.min.js'
       },
       'modules-dist': {
         src: [
