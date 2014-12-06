@@ -1,8 +1,8 @@
 {
   "name": "jstool-core",
-  "version": "0.1.12",
+  "version": "0.1.14",
   "description": "Basic JS Web Tools",
-  "main": "dist/core.js",
+  "main": "core.js",
   "dependencies": {},
   "devDependencies": {
     "grunt": "latest",
