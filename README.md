@@ -1,3 +1,5 @@
+jstool-core [![npm version](https://badge.fury.io/js/jstool-core.svg)](http://badge.fury.io/js/jstool-core)
+
 Copyright (c) 2014, Jesús Manuel Germade Castiñeiras <jesus@germade.es>
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
