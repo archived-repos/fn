@@ -1,9 +1,11 @@
-jstool-core [![npm version](https://badge.fury.io/js/jstool-core.svg)](http://badge.fury.io/js/jstool-core)
+[![npm version](https://badge.fury.io/js/jstool-core.svg)](http://badge.fury.io/js/jstool-core)
 
-jsTool-core
-===========
+jsTool-core [MIT License](LICENSE)
+==================================
+> global function 'fn' to sandbox all other definitions
 
-for ensure compatibility with old browsers it's recomended to add this code before scripts
+
+it's recomended to add this code before scripts to ensure compatibility with old browsers
 ``` html
 <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.5/es5-shim.min.js"></script>
@@ -12,8 +14,6 @@ for ensure compatibility with old browsers it's recomended to add this code befo
     <script src="//cdnjs.cloudflare.com/ajax/libs/es6-shim/0.21.1/es6-shim.min.js"></script>
 <![endif]-->
 ```
-
-global function 'fn' to sandbox all other definitions
 
 fn.define(moduleName, dependencies?, definition)
 ------------------------------------------------
