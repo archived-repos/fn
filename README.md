@@ -1,7 +1,7 @@
 [![npm version](https://badge.fury.io/js/jstool-core.svg)](http://badge.fury.io/js/jstool-core)
-
-jsTool-core [MIT License](LICENSE)
+jsTool-core
 ==================================
+> [MIT License](LICENSE)
 > global function 'fn' to sandbox all other definitions
 
 
