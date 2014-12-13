@@ -115,13 +115,11 @@
 			f = dependencies.pop();
 		} else if( _.isFunction(dependencies) ) {
 			f = dependencies;
-			dependencies = f.toString().match(RE_FN_ARGS)[1].split(',');
+			dependencies = f.toString().match(RE_FN_ARGS)[1].split(',') || [];
 		}
 
 		if( f instanceof Function ) {
-			fn.require(dependencies, function () {
-				f.apply(definitions, this.injections);
-			});
+			fn.require(dependencies, f);
 		}
 	};
 
@@ -146,7 +144,7 @@
 			}
 
 			fn.require(dependencies, function () {
-				definitions[fnName] = fnDef.apply(definitions, this.injections);
+				definitions[fnName] = fnDef.apply(definitions, arguments);
 				log('fn defined: ', fnName);
 				triggerFn(fnName);
 			});
@@ -158,9 +156,9 @@
 
 		var runCallback = function () {
 			for( var i = 0, len = dependencies.length, injections = []; i < len; i++ ) {
-				injections.push(definitions[dependencies[i]]);
+				dependencies[i] && injections.push(definitions[dependencies[i]]);
 			}
-			callback.apply({ injections: injections }, injections);
+			callback.apply(definitions, injections);
 		};
 
 		if( _.isString(dependencies) ) dependencies = [dependencies];
@@ -170,7 +168,7 @@
 			if( dependencies.length ) {
 
 				for( var i = 0, len = dependencies.length, pending = 0; i < len; i++ ) {
-					if( !definitions[dependencies[i]] ) {
+					if( dependencies[i] && !definitions[dependencies[i]] ) {
 						pending++;
 						fn.defer(function () {
 							fn.when(dependencies[i], function () {
