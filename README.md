@@ -1,3 +1,5 @@
+jstool-core [![npm version](https://badge.fury.io/js/jstool-core.svg)](http://badge.fury.io/js/jstool-core)
+
 jsTool-core
 ===========
 
@@ -19,7 +21,7 @@ fn.define(moduleName, dependencies?, definition)
 ``` js
 fn.define('moduleName', [ 'dependence_1', 'dependence_2', ..., function ( dependence_1, dependence_1, ...) {
 	
-	// add necessary stuff
+	// your code
 
 	return definition;
 } ]);
@@ -43,7 +45,7 @@ fn.require(dependencies, callback)
 ``` js
 fn.require(['dependence_1', 'dependence_2'], function ( dependence_1, dependence_1 ) {
 	
-	// do desired stuff
+	// your code
 
 } ]);
 ```
@@ -55,7 +57,7 @@ explicit injection mode
 ``` js
 fn.run(['dependence_1', 'dependence_2', function ( dependence_1, dependence_1 ) {
 	
-	// do desired stuff
+	// your code
 
 } ]);
 ```
@@ -64,7 +66,7 @@ implicit injection mode (dependencies will be automatically detected -not recome
 ``` js
 fn.run(function ( dependence_1, dependence_1 ) {
 	
-	// do desired stuff
+	// your code
 
 });
 ```
