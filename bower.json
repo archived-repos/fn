@@ -1,0 +1,23 @@
+{
+    "name": "jstool-core",
+    "main": "core.js",
+    "version": "0.1.19",
+    "homepage": "https://github.com/jstools/jstool-core",
+    "authors": [
+        "Jesús Germade <jesus@germade.es>"
+    ],
+    "description": "simple javascript core",
+    "keywords": [
+        "javascript",
+        "jstools",
+        "core"
+    ],
+    "license": "ISC",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}

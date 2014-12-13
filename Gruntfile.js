@@ -129,6 +129,12 @@ module.exports = function(grunt) {
 
     jshint: {
       all: ['Gruntfile.js', 'modules/**/*.js']
+    },
+
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js'
+      }
     }
 
   });
@@ -149,5 +155,7 @@ module.exports = function(grunt) {
 
   // Default task(s).
   grunt.registerTask('default', ['dev']);
+
+  grunt.registerTask('test', ['karma']);
 
 };
