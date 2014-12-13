@@ -33,20 +33,21 @@
 		isObject: function(myVar,type){ if( myVar instanceof Object ) return ( type === 'any' ) ? true : ( typeof myVar === (type || 'object') ); else return false; },
 		key: function(o,full_key,value){
     		if(! o instanceof Object) return false;
-    		var keys = full_key.split('.'), in_keys = o || {};
+    		var key, keys = full_key.split('.'), in_keys = o || {};
     		if(value !== undefined) {
     			if(keys.length) {
-    				var key = keys.shift(), next_key;
-    				while( next_key = keys.shift() ) {
+    				key = keys.shift();
+    				next_key = keys.shift();
+    				while( next_key ) {
     					if( !o[key] ) o[key] = {};
     					o = o[key];
     					key = next_key;
+    					next_key = keys.shift();
     				}
     				o[key] = value;
     			}
     			return value;
     		} else {
-    		    var key;
     			for(var k=0, len = keys.length;k<len;k++) {
     			    key = keys[k];
     			    if( key in in_keys ) in_keys = in_keys[keys[k]] || {};
@@ -62,7 +63,7 @@
     		} else if(varName) {
     			_global[varName] = definitions[varName];
     		} else {
-    			for( var varName in definitions ) {
+    			for( varName in definitions ) {
     				_global[varName] = definitions[varName];
     			}
     		}
@@ -156,9 +157,29 @@
 
 		var runCallback = function () {
 			for( var i = 0, len = dependencies.length, injections = []; i < len; i++ ) {
-				dependencies[i] && injections.push(definitions[dependencies[i]]);
+				if( dependencies[i] ) {
+					injections.push(definitions[dependencies[i]]);
+				}
 			}
 			callback.apply(definitions, injections);
+		};
+
+		runCallback._try = function () {
+			runCallback.pending--;
+			if( !runCallback.pending ) {
+				runCallback();
+			}
+		};
+
+		runCallback._add = function (dependence) {
+			if( !definitions[dependence] ) {
+				runCallback.pending++;
+				fn.defer(function () {
+					if( definitions[dependence] ) {
+						runCallback._try();
+					} else onceFn(dependence, runCallback._try);
+				});
+			}
 		};
 
 		if( _.isString(dependencies) ) dependencies = [dependencies];
@@ -167,19 +188,15 @@
 
 			if( dependencies.length ) {
 
-				for( var i = 0, len = dependencies.length, pending = 0; i < len; i++ ) {
-					if( dependencies[i] && !definitions[dependencies[i]] ) {
-						pending++;
-						fn.defer(function () {
-							fn.when(dependencies[i], function () {
-								pending--;
-								!pending && runCallback();
-							})
-						});
+				for( var i = 0, len = dependencies.length; i < len; i++ ) {
+					if( dependencies[i] ) {
+						runCallback._add(dependencies[i]);
 					}
 				}
 
-				!pending && runCallback();
+				if( !pending ) {
+					runCallback();
+				}
 
 			} else runCallback();
 		}
@@ -195,7 +212,7 @@
 	};
 
 	fn.defer = function (f, time) {
-		_.isFunction(f) && setTimeout(f, time || 0);
+		setTimeout(f, time || 0);
 	};
 
 	fn.globalize = _.globalize;

@@ -156,7 +156,7 @@ module.exports = function(grunt) {
     },
 
     jshint: {
-      all: ['Gruntfile.js', 'modules/**/*.js']
+      all: ['Gruntfile.js', 'core/**/*.js']
     },
 
     karma: {
@@ -167,7 +167,7 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('index-serve-watch', [ 'copy:index-tmp', 'injector:tmp', 'fileserver', 'watch' ])
+  grunt.registerTask('index-serve-watch', [ 'copy:index-tmp', 'injector:tmp', 'fileserver', 'watch' ]);
 
   // Dev Build
   grunt.registerTask('dev-build', [ 'clean:tmp', 'copy:core-tmp', 'copy:modules-tmp', 'index-serve-watch' ]);
@@ -189,6 +189,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['dev']);
 
-  grunt.registerTask('test', ['karma']);
+  grunt.registerTask('test', ['jshint', 'karma']);
 
 };
