@@ -3,9 +3,9 @@ fn.define('widgets', function ($) {
         plugins = {},
         pluginSets = {};
 
-    function htmlPlugin (pluginName, plugin, isSet) {
+    function htmlPlugin (pluginName, plugin, isCollection) {
         if( typeof pluginName === 'string' && plugin instanceof Function ) {
-            if( isSet ) {
+            if( isCollection ) {
                 pluginSets[pluginName] = plugin;
                 if( jDoc.isReady ) {
                     plugin.call(jDoc, jDoc.find(pluginName));
@@ -46,4 +46,4 @@ fn.define('widgets', function ($) {
     });
 
     return htmlPlugin;
-})();
+});

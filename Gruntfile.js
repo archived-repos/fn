@@ -24,7 +24,6 @@ module.exports = function(grunt) {
       dist: {
         src: [
           'core/license.js',
-          'core/fix-ie.js',
           'core/log.js',
           'core/fn.js'
         ],
@@ -59,7 +58,6 @@ module.exports = function(grunt) {
       'core-tmp': {
         src: [
           'core/license.js',
-          'core/fix-ie.js',
           'core/log.js',
           'core/fn.js'
         ],
@@ -73,7 +71,6 @@ module.exports = function(grunt) {
       },
       'core-dist': {
         src: [
-          'core/fix-ie.js',
           'core/log.js',
           'core/fn.js'
         ],
@@ -94,7 +91,6 @@ module.exports = function(grunt) {
           '.tmp/index.html': [
             '.tmp/core.min.js',
             '.tmp/*.min.js',
-            '.tmp/core/fix-ie.js',
             '.tmp/core/log.js',
             '.tmp/core/fn.js',
             '.tmp/modules/**/*.js'

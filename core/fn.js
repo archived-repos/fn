@@ -15,6 +15,8 @@
 (function () {
 	'use strict';
 
+	var _global = (typeof window === 'undefined' ? module.exports : window);
+
 	var _ = {
 		isFunction: function (fn) {
 			return (fn instanceof Function);
@@ -56,9 +58,13 @@
     	keys: Object.keys,
     	globalize: function (varName, o) {
     		if( o ) {
-    			(typeof window === 'undefined' ? module.exports : window)[varName] = o;
+    			_global[varName] = o;
+    		} else if(varName) {
+    			_global[varName] = definitions[varName];
     		} else {
-    			(typeof window === 'undefined' ? module.exports : window)[varName] = definitions[varName];
+    			for( var varName in definitions ) {
+    				_global[varName] = definitions[varName];
+    			}
     		}
     	}
 	};
@@ -66,13 +72,6 @@
 	var definitions = { '_': _ },
 		RE_FN_ARGS = /^function[^\(]\(([^\)]*)/,
 		noop = function () {},
-		tryDone = function (waitFor, callback) {
-			if( !Object.keys(waitFor).length && _.isFunction(callback) ) {
-				callback();
-				return true;
-			}
-			return false;
-		},
 		fnListeners = {};
 
 	/**
@@ -101,9 +100,10 @@
 	}
 
 	function triggerFn (fnName) {
+		var definition = definitions[fnName];
 		if( _.isArray(fnListeners[fnName]) ) {
 			for( var i = 0, len = fnListeners[fnName].length; i < len; i++ ) {
-				fnListeners[fnName][i]();
+				fnListeners[fnName][i](definition);
 			}
 		}
 	}
@@ -143,10 +143,8 @@
 						});
 					}
 				});
-				// dependencies = fnDef.toString().replace(/\s/g,'').match(RE_FN_ARGS)[1].split(',');
 			}
 
-			// log('fn.define', fnName, fnDef, dependencies);
 			fn.require(dependencies, function () {
 				definitions[fnName] = fnDef.apply(definitions, this.injections);
 				log('fn defined: ', fnName);
@@ -159,50 +157,47 @@
 		if( !_.isFunction(callback) ) return false;
 
 		var runCallback = function () {
-			var injections = [];
-			for( var i = 0, len = dependencies.length; i < len; i++ ) {
+			for( var i = 0, len = dependencies.length, injections = []; i < len; i++ ) {
 				injections.push(definitions[dependencies[i]]);
 			}
-			callback.call({ injections: injections });
+			callback.apply({ injections: injections }, injections);
 		};
+
+		if( _.isString(dependencies) ) dependencies = [dependencies];
 
 		if( _.isArray(dependencies) ) {
 
 			if( dependencies.length ) {
-				var waitFor = {};
 
-				for( var i = 0, len = dependencies.length; i < len; i++ ) {
+				for( var i = 0, len = dependencies.length, pending = 0; i < len; i++ ) {
 					if( !definitions[dependencies[i]] ) {
-						waitFor[dependencies[i]] = true;
+						pending++;
+						fn.defer(function () {
+							fn.when(dependencies[i], function () {
+								pending--;
+								!pending && runCallback();
+							})
+						});
 					}
 				}
 
-				if( !tryDone(waitFor, runCallback) ) {
-					dependencies.forEach(function (dependence) {
-						fn.when(dependence, function () {
-							delete waitFor[dependence];
-							tryDone(waitFor, runCallback);
-						});
-					});
-				}
+				!pending && runCallback();
 
 			} else runCallback();
-		} else if( _.isString(dependencies) ) {
-			fn.when(dependencies, runCallback);
 		}
 	};
 
 	fn.when = function (fnName, callback) {
 		if( _.isFunction(callback) ) {
-			if( definitions[fnName] ) callback();
-			else onceFn(fnName, callback);
+			if( definitions[fnName] ) callback.apply(context, definition);
+			else onceFn(fnName, function () {
+				callback.apply(context, definition);
+			});
 		}
 	};
 
-	fn.defer = function (f) {
-		if( _.isFunction(f) ) {
-			setTimeout(f, 0);
-		}	
+	fn.defer = function (f, time) {
+		_.isFunction(f) && setTimeout(f, time || 0);
 	};
 
 	fn.globalize = _.globalize;
