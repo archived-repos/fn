@@ -17,6 +17,34 @@ module.exports = function(grunt) {
       }
     },
 
+    shell: {
+      options: {
+        stderr: false
+      },
+      'git-add': {
+        command: 'git add --all'
+      },
+      'git-commit-version': {
+        command: 'git commit -m "increasing version"'
+      },
+      'git-push': {
+        command: 'git push origin master'
+      },
+      'npm-publish': {
+        command: 'npm publish'
+      }
+    },
+
+    'increase-version': {
+      bower: {
+        options: {
+        },
+        files: {
+          src: [ 'bower.json' ]
+        }
+      }
+    },
+
     concat: {
       options: {
         separator: ';',
@@ -154,6 +182,11 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [ 'uglify:core-dist', 'concat:dist' ]);
 
   // Default task(s).
+
+  grunt.registerTask('git:increase-version', [ 'shell:git-add', 'shell:git-commit-version', 'shell:git-push' ]);
+
+  grunt.registerTask('publish', [ 'uglify:core-dist', 'increase-version', 'git:increase-version', 'shell:npm-publish' ]);
+
   grunt.registerTask('default', ['dev']);
 
   grunt.registerTask('test', ['karma']);
