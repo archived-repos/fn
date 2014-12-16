@@ -52,7 +52,7 @@ fn.require(['dependence_1', 'dependence_2'], function ( dependence_1, dependence
 
 fn.run(dependencies || function)
 --------------------------------
-or just fn(dependencies || function)
+> or just **fn(dependencies || function)**
 
 explicit injection mode
 ``` js
