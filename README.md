@@ -50,8 +50,9 @@ fn.require(['dependence_1', 'dependence_2'], function ( dependence_1, dependence
 } ]);
 ```
 
-fn.run(dependencies || function) or just fn(dependencies || function)
----------------------------------------------------------------------
+fn.run(dependencies || function)
+--------------------------------
+or just fn(dependencies || function)
 
 explicit injection mode
 ``` js
@@ -69,22 +70,6 @@ fn.run(function ( dependence_1, dependence_1 ) {
 	// your code
 
 });
-```
-
-fn.defer(function, timeout? (0) )
------------------------------------
-
-``` js
-fn(function () { console.log('test 1'); });
-fn.defer(function () { console.log('test 2'); });
-fn(function () { console.log('test 3'); });
-```
-
-this will output
-```
-test 1
-test 3
-test 2
 ```
 
 fn.defer(function, timeout? (0) )
