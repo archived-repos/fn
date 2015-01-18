@@ -152,10 +152,20 @@
 			fn.waiting[fnName] = dependencies;
 
 			fn.require(dependencies, function () {
-				definitions[fnName] = fnDef.apply(definitions, arguments);
-				log('fn defined: ', fnName);
-				triggerFn(fnName);
-				delete fn.waiting[fnName];
+				var definition = fnDef.apply(definitions, arguments);
+				if( definition && definition.then instanceof Function ) {
+					definition.then(function (def) {
+						definitions[fnName] = def;
+						log('fn defined: ', fnName);
+						triggerFn(fnName);
+						delete fn.waiting[fnName];
+					});
+				} else {
+					definitions[fnName] = definition;
+					log('fn defined: ', fnName);
+					triggerFn(fnName);
+					delete fn.waiting[fnName];
+				}
 			});
 		}
 	};
