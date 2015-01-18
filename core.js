@@ -297,7 +297,13 @@
 
 	_.globalize('fn', fn);
 
-	window.onload = function () {
+	fn.load = window.addEventListener ? function (listener) {
+		window.addEventListener('load', listener, false);
+	} : function (listener) {
+		window.attachEvent('onload', listener );
+	};
+
+	fn.load(function () {
 		var missingDependencies = {}, dependencies, key, i, len;
 
 		for( key in fn.waiting ) {
@@ -317,6 +323,6 @@
 			}
 			console.groupEnd();
 		}
-	};
+	});
 
 })();
