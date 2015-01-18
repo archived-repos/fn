@@ -109,11 +109,14 @@
 		}
 	}
 
-	fn.run = function (dependencies) {
-		var f;
+	fn.waiting = {};
 
+	fn.run = function (dependencies, f) {
+		
 		if( _.isArray(dependencies) ) {
-			f = dependencies.pop();
+			if( f === undefined ) {
+				f = dependencies.pop();
+			}
 		} else if( _.isFunction(dependencies) ) {
 			f = dependencies;
 			dependencies = f.toString().match(RE_FN_ARGS)[1].split(',') || [];
@@ -124,13 +127,15 @@
 		}
 	};
 
-	fn.define = function (fnName, dependencies) {
+	fn.define = function (fnName, dependencies, fnDef) {
 		if( _.isString(fnName) ) {
 
-			var fnDef, args = [];
+			var args = [];
 
 			if( _.isArray(dependencies) ) {
-				fnDef = dependencies.pop();
+				if( fnDef === undefined ) {
+					fnDef = dependencies.pop();
+				}
 			} else if( _.isFunction(dependencies) ) {
 				fnDef = dependencies;
 				dependencies = [];
@@ -144,10 +149,13 @@
 				});
 			}
 
+			fn.waiting[fnName] = dependencies;
+
 			fn.require(dependencies, function () {
 				definitions[fnName] = fnDef.apply(definitions, arguments);
 				log('fn defined: ', fnName);
 				triggerFn(fnName);
+				delete fn.waiting[fnName];
 			});
 		}
 	};
@@ -164,6 +172,8 @@
 			callback.apply(definitions, injections);
 		};
 
+		runCallback.pending = 0;
+
 		runCallback._try = function () {
 			runCallback.pending--;
 			if( !runCallback.pending ) {
@@ -177,7 +187,9 @@
 				fn.defer(function () {
 					if( definitions[dependence] ) {
 						runCallback._try();
-					} else onceFn(dependence, runCallback._try);
+					} else {
+						onceFn(dependence, runCallback._try);
+					}
 				});
 			}
 		};
@@ -194,7 +206,7 @@
 					}
 				}
 
-				if( !pending ) {
+				if( !runCallback.pending ) {
 					runCallback();
 				}
 
@@ -218,5 +230,27 @@
 	fn.globalize = _.globalize;
 
 	_.globalize('fn', fn);
+
+	window.onload = function () {
+		var missingDependencies = {}, dependencies, key, i, len;
+
+		for( key in fn.waiting ) {
+			dependencies = fn.waiting[key];
+			missingDependencies[key] = [];
+			for( i = 0, len = dependencies.length; i < len; i++ ) {
+				if( !definitions[dependencies[i]] ) {
+					missingDependencies[key].push(dependencies[i]);
+				}
+			}
+		}
+
+		if( Object.keys(missingDependencies).length ) {
+			console.group('missing dependencies');
+			for( key in missingDependencies ) {
+				console.log(key, missingDependencies[key]);
+			}
+			console.groupEnd();
+		}
+	};
 
 })();

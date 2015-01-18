@@ -15,6 +15,8 @@ fn.define('localData', ['Events', function (Events) {
         }
     }, loopback = {};
 
+    console.log('Events', Events);
+
     new Events(localData);
 
     localData.setItem = function (key, data, meta){

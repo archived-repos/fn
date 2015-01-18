@@ -32,7 +32,7 @@
 	    if (window.console) console.clear();
 	};
 
-	if( window.enableLog ) {
+	if( document.documentElement.getAttribute('data-log') === 'true' ) {
 		log.enable();
 	}
 
