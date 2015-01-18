@@ -216,8 +216,8 @@
 
 	fn.when = function (fnName, callback) {
 		if( _.isFunction(callback) ) {
-			if( definitions[fnName] ) callback.apply(context, definition);
-			else onceFn(fnName, function () {
+			if( definitions[fnName] ) callback.apply(context, definitions[fnName]);
+			else onceFn(fnName, function (definition) {
 				callback.apply(context, definition);
 			});
 		}
