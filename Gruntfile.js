@@ -185,7 +185,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('git:increase-version', [ 'shell:git-add', 'shell:git-commit-version', 'shell:git-push' ]);
 
-  grunt.registerTask('publish', [ 'uglify:core-dist', 'increase-version', 'git:increase-version', 'shell:npm-publish' ]);
+  grunt.registerTask('publish', [ 'build', 'increase-version', 'git:increase-version', 'shell:npm-publish' ]);
 
   grunt.registerTask('default', ['dev']);
 
