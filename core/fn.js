@@ -83,14 +83,12 @@
 	 * @param {dependencies} array of dependencies ended by function defition
 	 * @returns {Object} the Core
 	 */
-	function fn (f, dependencies) {
-		if( dependencies ) {
-			fn.define(f, dependencies);
-		} else if( _.isArray(f) ) {
-			return definitions[f];
+	function fn (f, run) {
+		if( run ) {
+			fn.run(f, run);
 		} else if( _.isString(f) ) {
 			return definitions[f];
-		} else {
+		} else if( f instanceof Function ) {
 			fn.run(f);
 		}
 	}
