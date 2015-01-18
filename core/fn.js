@@ -247,7 +247,7 @@
 		if( Object.keys(missingDependencies).length ) {
 			console.group('missing dependencies');
 			for( key in missingDependencies ) {
-				console.log(key, missingDependencies[key]);
+				log(key, missingDependencies[key]);
 			}
 			console.groupEnd();
 		}
