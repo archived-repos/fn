@@ -267,4 +267,14 @@
 		}
 	});
 
+	if( typeof $ !== 'undefined' ) {
+		var $widget = function (widgetName, handler, collection) {
+	      jqlite.plugin('[data-widget="' + widgetName + '"]', function () { fn(handler) }, collection);
+	    };
+		if( $.widget ) {
+			$widget.noConflict = $.widget;
+		}
+		$.widget = $widget;
+	}
+
 })();
