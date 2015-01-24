@@ -271,4 +271,34 @@
 		}
 	});
 
+	if( typeof jqlite !== 'undefined' ) {
+		var $widget = function (widgetName, handler) {
+			var dependencies = [];
+			if( handler instanceof Array ) {
+				dependencies = handler;
+				handler = dependencies.pop();
+			}
+
+			handler.dependencies = dependencies;
+			$widget.widgets[widgetName] = handler;
+
+			if( !$widget.enabled ) {
+				$widget.enabled = true;
+
+				jqlite.plugin('[data-widget]', function () {
+					var widgetName = this.getAttribute('data-widget'), _handler = $widget.widgets[widgetName];
+
+					if( _handler ) {
+						fn.run(_handler.dependencies, _handler, this);
+					}
+				});
+			}
+		};
+		$widget.enabled = false;
+		$widget.widgets = {};
+
+		$widget.noConflict = $.widget;
+		$.widget = $widget;
+	}
+
 })();
