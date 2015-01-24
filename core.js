@@ -64,7 +64,8 @@
 
 	window.log = log;
 
-})();;/*	Copyright (c) 2014, Jesús Manuel Germade Castiñeiras <jesus@germade.es>
+})();;
+/*	Copyright (c) 2014, Jesús Manuel Germade Castiñeiras <jesus@germade.es>
  * 
  *	Permission to use, copy, modify, and/or distribute this software for any purpose
  *	with or without fee is hereby granted, provided that the above copyright notice
@@ -149,13 +150,13 @@
 	 * @param {dependencies} array of dependencies ended by function defition
 	 * @returns {Object} the Core
 	 */
-	function fn (f, run) {
+	function fn (f, run, context) {
 		if( run ) {
 			fn.run(f, run);
 		} else if( _.isString(f) ) {
 			return definitions[f];
 		} else if( f instanceof Function ) {
-			fn.run(f);
+			fn.run(f, context, context);
 		}
 	}
 
@@ -175,7 +176,7 @@
 
 	fn.waiting = {};
 
-	fn.run = function (dependencies, f) {
+	fn.run = function (dependencies, f, context) {
 		
 		if( _.isArray(dependencies) ) {
 			if( f === undefined ) {
@@ -187,7 +188,9 @@
 		}
 
 		if( f instanceof Function ) {
-			fn.require(dependencies, f);
+			fn.require(dependencies, function () {
+				f.call(context);
+			});
 		}
 	};
 
@@ -335,7 +338,12 @@
 
 	if( typeof $ !== 'undefined' ) {
 		var $widget = function (widgetName, handler, collection) {
-	      jqlite.plugin('[data-widget="' + widgetName + '"]', function () { fn(handler) }, collection);
+			var dependencies = [];
+			if( handler instanceof Array ) {
+				dependencies = handler;
+				handler = dependencies.pop();
+			}
+	      	jqlite.plugin('[data-widget="' + widgetName + '"]', function () { fn(dependencies, handler, this); }, collection);
 	    };
 		if( $.widget ) {
 			$widget.noConflict = $.widget;
