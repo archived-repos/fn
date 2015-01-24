@@ -243,7 +243,7 @@
 					injections.push(definitions[dependencies[i]]);
 				}
 			}
-			callback.apply(definitions, injections, context);
+			callback.apply(context || definitions, injections);
 		};
 
 		runCallback.pending = 0;
