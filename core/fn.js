@@ -271,19 +271,34 @@
 		}
 	});
 
-	if( typeof $ !== 'undefined' ) {
-		var $widget = function (widgetName, handler, collection) {
-			var dependencies = [];
-			if( handler instanceof Array ) {
-				dependencies = handler;
-				handler = dependencies.pop();
-			}
-	      	jqlite.plugin('[data-widget="' + widgetName + '"]', function () { fn(dependencies, handler, this); }, collection);
+	if( typeof jqlite !== 'undefined' ) {
+		var $widget = function (widgetName, dependencies, handler) {
+	      var _this = this;
+
+	      if( dependencies instanceof Function ) {
+	      	handler = dependencies;
+	      	dependencies = [];
+	      }
+	      handler.dependencies = dependencies;
+	      $widget.widgets[widgetName] = handler;
+
+	      if( !$widget.enabled ) {
+	        $widget.enabled = true;
+	        
+	        jqlite.plugin('[data-widget]', function () {
+	          var widgetName = this.getAttribute('data-widget'), _handler = $widget.widgets[widgetName];
+
+	          if( _handler ) {
+	          	fn.run(_handler.dependencies, _handler, _this);
+	          }
+	        });
+	      }
 	    };
-		if( $.widget ) {
-			$widget.noConflict = $.widget;
-		}
-		$.widget = $widget;
+	    $widget.enabled = false;
+	    $widget.widgets = {};
+
+	    $widget.noConflict = $.widget;
+	    $.widget = $widget;
 	}
 
 })();
