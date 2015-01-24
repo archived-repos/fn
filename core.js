@@ -150,13 +150,11 @@
 	 * @param {dependencies} array of dependencies ended by function defition
 	 * @returns {Object} the Core
 	 */
-	function fn (f, run, context) {
-		if( run ) {
-			fn.run(f, run);
-		} else if( _.isString(f) ) {
-			return definitions[f];
-		} else if( f instanceof Function ) {
-			fn.run(f, context, context);
+	function fn (deps, func, context) {
+		if( _.isString(deps) ) {
+			return definitions[deps];
+		} else {
+			fn.run(deps, func, context);
 		}
 	}
 
