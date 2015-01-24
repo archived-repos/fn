@@ -278,7 +278,14 @@
 	      if( dependencies instanceof Function ) {
 	      	handler = dependencies;
 	      	dependencies = [];
+	      } else if( dependencies instanceof Array && handler === undefined ) {
+	      	handler = dependencies.pop();
 	      }
+
+	      if( !handler instanceof Function ) {
+	      	throw 'function missing';
+	      }
+
 	      handler.dependencies = dependencies;
 	      $widget.widgets[widgetName] = handler;
 
@@ -299,6 +306,6 @@
 
 	    $widget.noConflict = $.widget;
 	    $.widget = $widget;
-	}
+	}	
 
 })();
