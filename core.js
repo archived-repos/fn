@@ -187,7 +187,7 @@
 
 		if( f instanceof Function ) {
 			fn.require(dependencies, function () {
-				f.call(context);
+				f.call(context, arguments);
 			});
 		}
 	};
