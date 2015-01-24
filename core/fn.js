@@ -86,7 +86,11 @@
 	 */
 	function fn (deps, func, context) {
 		if( _.isString(deps) ) {
-			return definitions[deps];
+			if( func === undefined ) {
+				return definitions[deps];
+			} else {
+				return fn.define(deps, func, context);
+			}
 		} else {
 			fn.run(deps, func, context);
 		}
