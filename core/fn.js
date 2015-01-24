@@ -115,14 +115,13 @@
 				f = dependencies.pop();
 			}
 		} else if( _.isFunction(dependencies) ) {
+			context = f;
 			f = dependencies;
 			dependencies = f.toString().match(RE_FN_ARGS)[1].split(',') || [];
 		}
 
 		if( f instanceof Function ) {
-			fn.require(dependencies, function () {
-				f.call(context, arguments);
-			});
+			fn.require(dependencies, f, context);
 		}
 	};
 
@@ -169,7 +168,7 @@
 		}
 	};
 
-	fn.require = function (dependencies, callback) {
+	fn.require = function (dependencies, callback, context) {
 		if( !_.isFunction(callback) ) return false;
 
 		var runCallback = function () {
@@ -178,7 +177,7 @@
 					injections.push(definitions[dependencies[i]]);
 				}
 			}
-			callback.apply(definitions, injections);
+			callback.apply(definitions, injections, context);
 		};
 
 		runCallback.pending = 0;
