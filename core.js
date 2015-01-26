@@ -64,8 +64,7 @@
 
 	window.log = log;
 
-})();;
-/*	Copyright (c) 2014, Jesús Manuel Germade Castiñeiras <jesus@germade.es>
+})();;/*	Copyright (c) 2014, Jesús Manuel Germade Castiñeiras <jesus@germade.es>
  * 
  *	Permission to use, copy, modify, and/or distribute this software for any purpose
  *	with or without fee is hereby granted, provided that the above copyright notice
@@ -195,6 +194,13 @@
 		}
 	};
 
+	function addDefinition (fnName, definition) {
+		definitions[fnName] = definition;
+		log.debug('fn defined: ', fnName);
+		triggerFn(fnName);
+		delete fn.waiting[fnName];
+	}
+
 	fn.define = function (fnName, dependencies, fnDef) {
 		if( _.isString(fnName) ) {
 
@@ -223,16 +229,12 @@
 				var definition = fnDef.apply(definitions, arguments);
 				if( definition && definition.then instanceof Function ) {
 					definition.then(function (def) {
-						definitions[fnName] = def;
-						log('fn defined: ', fnName);
-						triggerFn(fnName);
-						delete fn.waiting[fnName];
+						setTimeout(function () {
+							addDefinition(fnName, def);
+						}, 0);
 					});
 				} else {
-					definitions[fnName] = definition;
-					log('fn defined: ', fnName);
-					triggerFn(fnName);
-					delete fn.waiting[fnName];
+					addDefinition(fnName, definition);
 				}
 			});
 		}
