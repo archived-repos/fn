@@ -309,8 +309,6 @@
 
 	fn.globalize = _.globalize;
 
-	_.globalize('fn', fn);
-
 	fn.load = window.addEventListener ? function (listener) {
 		window.addEventListener('load', listener, false);
 	} : function (listener) {
@@ -338,6 +336,8 @@
 			console.groupEnd();
 		}
 	});
+
+	_.globalize('fn', fn);
 
 	if( typeof jqlite !== 'undefined' ) {
 		var $widget = function (widgetName, handler) {
