@@ -64,7 +64,8 @@
 
 	window.log = log;
 
-})();;/*	Copyright (c) 2014, Jesús Manuel Germade Castiñeiras <jesus@germade.es>
+})();;
+/*	Copyright (c) 2014, Jesús Manuel Germade Castiñeiras <jesus@germade.es>
  * 
  *	Permission to use, copy, modify, and/or distribute this software for any purpose
  *	with or without fee is hereby granted, provided that the above copyright notice
@@ -309,6 +310,8 @@
 
 	fn.globalize = _.globalize;
 
+	_.globalize('fn', fn);
+
 	fn.load = window.addEventListener ? function (listener) {
 		window.addEventListener('load', listener, false);
 	} : function (listener) {
@@ -336,37 +339,5 @@
 			console.groupEnd();
 		}
 	});
-
-	_.globalize('fn', fn);
-
-	if( typeof jqlite !== 'undefined' ) {
-		var $widget = function (widgetName, handler) {
-			var dependencies = [];
-			if( handler instanceof Array ) {
-				dependencies = handler;
-				handler = dependencies.pop();
-			}
-
-			handler.dependencies = dependencies;
-			$widget.widgets[widgetName] = handler;
-
-			if( !$widget.enabled ) {
-				$widget.enabled = true;
-
-				jqlite.plugin('[data-widget]', function () {
-					var widgetName = this.getAttribute('data-widget'), _handler = $widget.widgets[widgetName];
-
-					if( _handler ) {
-						fn.run(_handler.dependencies, _handler, this);
-					}
-				});
-			}
-		};
-		$widget.enabled = false;
-		$widget.widgets = {};
-
-		$widget.noConflict = $.widget;
-		$.widget = $widget;
-	}
 
 })();

@@ -1,6 +1,6 @@
 {
     "name": "jstool-core",
-    "version": "0.1.48",
+    "version": "0.1.49",
     "description": "Basic JS Web Tools",
     "main": "core.js",
     "dependencies": {},
