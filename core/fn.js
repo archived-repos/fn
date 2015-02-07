@@ -94,6 +94,7 @@
 		} else {
 			fn.run(deps, func, context);
 		}
+		return fn;
 	}
 
 	function onceFn (fnName, handler) {
@@ -127,6 +128,8 @@
 		if( f instanceof Function ) {
 			fn.require(dependencies, f, context);
 		}
+
+		return fn;
 	};
 
 	function addDefinition (fnName, definition) {
@@ -173,6 +176,8 @@
 				}
 			});
 		}
+
+		return fn;
 	};
 
 	fn.require = function (dependencies, callback, context) {
@@ -227,6 +232,8 @@
 
 			} else runCallback();
 		}
+
+		return fn;
 	};
 
 	fn.when = function (fnName, callback) {
@@ -236,10 +243,14 @@
 				callback.apply(context, definition);
 			});
 		}
+
+		return fn;
 	};
 
 	fn.defer = function (f, time) {
 		setTimeout(f, time || 0);
+
+		return fn;
 	};
 
 	fn.globalize = _.globalize;
@@ -248,8 +259,10 @@
 
 	fn.load = window.addEventListener ? function (listener) {
 		window.addEventListener('load', listener, false);
+		return fn;
 	} : function (listener) {
 		window.attachEvent('onload', listener );
+		return fn;
 	};
 
 	fn.load(function () {
