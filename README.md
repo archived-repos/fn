@@ -1,4 +1,6 @@
-[![npm version](https://badge.fury.io/js/jstool-core.svg)](http://badge.fury.io/js/jstool-core) [![Build Status](https://travis-ci.org/jstools/core.js.svg?branch=master)](https://travis-ci.org/jstools/core.js)
+[![npm version](https://badge.fury.io/js/jstool-core.svg)](http://badge.fury.io/js/jstool-core)
+[![Bower version](https://badge.fury.io/bo/jstool-core.svg)](http://badge.fury.io/bo/jstool-core)
+[![Build Status](https://travis-ci.org/jstools/core.js.svg?branch=master)](https://travis-ci.org/jstools/core.js)
 jsTool-core
 ==================================
 > [MIT License](LICENSE)
