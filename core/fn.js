@@ -273,6 +273,7 @@
 				fn.load(callback);
 			}
 		}
+		return fn;
 	};
 
 	fn.ready(function () {
