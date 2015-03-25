@@ -265,7 +265,17 @@
 		return fn;
 	};
 
-	fn.load(function () {
+	fn.ready = function (callback) {
+		if( callback instanceof Function ) {
+			if (/loaded|complete/.test(document.readyState)) {
+		    callback();
+		  } else {
+				fn.load(callback);
+			}
+		}
+	};
+
+	fn.ready(function () {
 		var missingDependencies = {}, dependencies, key, i, len;
 
 		for( key in fn.waiting ) {
