@@ -1,7 +1,7 @@
 {
     "name": "jstool-core",
     "main": "core.js",
-    "version": "0.1.52",
+    "version": "0.1.53",
     "homepage": "https://github.com/jstools/jstool-core",
     "authors": [
         "Jesús Germade <jesus@germade.es>"
