@@ -1,70 +1,4 @@
-/*
- * jstool-core - JS global object (fn) to define modules
 
- * The MIT License (MIT)
- * 
- * Copyright (c) 2014 Jesús Manuel Germade Castiñeiras <jesus@germade.es>
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- * 
- */
-;(function () {
-	'use strict';
-
-	var _consoleLog = function (type, args) {
-	        window.console[type].apply( window.console, args );
-	    },
-	    noop = function () {},
-	    consoleLog = noop;
-
-	var log = function() {
-	        consoleLog('log', Array.prototype.slice.call(arguments));
-	    };
-
-	['info', 'warn', 'debug', 'error'].forEach(function (type) {
-	    log[type] = (window.console !== undefined) ? function () {
-	        consoleLog(type, Array.prototype.slice.call(arguments));
-	    } : noop;
-	});
-
-	log.enable = function (enableLog) {
-	    enableLog = (enableLog === undefined) ? true : enableLog;
-	    if( enableLog ) {
-	        consoleLog = (window.console !== undefined ) ? _consoleLog : noop;
-	    } else {
-	        consoleLog = noop;
-	    }
-	    log('log is enabled');
-	};
-
-	log.clear = function() {
-	    log.history = [];
-	    if (window.console) console.clear();
-	};
-
-	if( document.documentElement.getAttribute('data-log') === 'true' ) {
-		log.enable();
-	}
-
-	window.log = log;
-
-})();;
 /*	Copyright (c) 2014, Jesús Manuel Germade Castiñeiras <jesus@germade.es>
  * 
  *	Permission to use, copy, modify, and/or distribute this software for any purpose
@@ -84,60 +18,32 @@
 
 	var _global = (typeof window === 'undefined' ? module.exports : window);
 
-	var _ = {
-		isFunction: function (fn) {
-			return (fn instanceof Function);
-		},
-		isArray: function (list) {
-			return (list instanceof Array);
-		},
-		isString: function (str) {
-			return ( typeof str === 'string' );
-		},
-		isNumber: function (n) {
-			return (n instanceof Number);
-		},
-		isObject: function(myVar,type){ if( myVar instanceof Object ) return ( type === 'any' ) ? true : ( typeof myVar === (type || 'object') ); else return false; },
-		key: function(o,full_key,value){
-    		if(! o instanceof Object) return false;
-    		var key, keys = full_key.split('.'), in_keys = o || {};
-    		if(value !== undefined) {
-    			if(keys.length) {
-    				key = keys.shift();
-    				next_key = keys.shift();
-    				while( next_key ) {
-    					if( !o[key] ) o[key] = {};
-    					o = o[key];
-    					key = next_key;
-    					next_key = keys.shift();
-    				}
-    				o[key] = value;
-    			}
-    			return value;
-    		} else {
-    			for(var k=0, len = keys.length;k<len;k++) {
-    			    key = keys[k];
-    			    if( key in in_keys ) in_keys = in_keys[keys[k]] || {};
-    				else return false;
-    			}
-    			return in_keys;
-    		}
-    	},
-    	keys: Object.keys,
-    	globalize: function (varName, o) {
-    		if( o ) {
-    			_global[varName] = o;
-    		} else if(varName) {
-    			_global[varName] = definitions[varName];
-    		} else {
-    			for( varName in definitions ) {
-    				_global[varName] = definitions[varName];
-    			}
-    		}
-    	}
-	};
+	function _instanceof (prototype) {
+    	return function (o) {
+    		return o instanceof prototype;
+    	};
+    } 
 
-	var definitions = { '_': _ },
+    function isString (o) {
+    	return typeof o === 'string';
+    }
+    var isFunction = _instanceof(Function),
+    	isArray = _instanceof(Array),
+    	isObject = _instanceof(Object);
+
+	function globalize (varName, o) {
+		if( o ) {
+			_global[varName] = o;
+		} else if(varName) {
+			_global[varName] = definitions[varName];
+		} else {
+			for( varName in definitions ) {
+				_global[varName] = definitions[varName];
+			}
+		}
+	}
+
+	var definitions = {},
 		RE_FN_ARGS = /^function[^\(]\(([^\)]*)/,
 		noop = function () {},
 		fnListeners = {};
@@ -151,7 +57,7 @@
 	 * @returns {Object} the Core
 	 */
 	function fn (deps, func, context) {
-		if( _.isString(deps) ) {
+		if( isString(deps) ) {
 			if( func === undefined ) {
 				return definitions[deps];
 			} else {
@@ -170,7 +76,7 @@
 
 	function triggerFn (fnName) {
 		var definition = definitions[fnName];
-		if( _.isArray(fnListeners[fnName]) ) {
+		if( isArray(fnListeners[fnName]) ) {
 			for( var i = 0, len = fnListeners[fnName].length; i < len; i++ ) {
 				fnListeners[fnName][i](definition);
 			}
@@ -181,11 +87,11 @@
 
 	fn.run = function (dependencies, f, context) {
 		
-		if( _.isArray(dependencies) ) {
+		if( isArray(dependencies) ) {
 			if( f === undefined ) {
 				f = dependencies.pop();
 			}
-		} else if( _.isFunction(dependencies) ) {
+		} else if( isFunction(dependencies) ) {
 			context = f;
 			f = dependencies;
 			dependencies = f.toString().match(RE_FN_ARGS)[1].split(',') || [];
@@ -200,21 +106,21 @@
 
 	function addDefinition (fnName, definition) {
 		definitions[fnName] = definition;
-		log.debug('fn defined: ', fnName);
+		console.debug('fn defined: ', fnName);
 		triggerFn(fnName);
 		delete fn.waiting[fnName];
 	}
 
 	fn.define = function (fnName, dependencies, fnDef) {
-		if( _.isString(fnName) ) {
+		if( isString(fnName) ) {
 
 			var args = [];
 
-			if( _.isArray(dependencies) ) {
+			if( isArray(dependencies) ) {
 				if( fnDef === undefined ) {
 					fnDef = dependencies.pop();
 				}
-			} else if( _.isFunction(dependencies) ) {
+			} else if( isFunction(dependencies) ) {
 				fnDef = dependencies;
 				dependencies = [];
 				fnDef.toString().replace(RE_FN_ARGS, function(match, params) {
@@ -247,7 +153,9 @@
 	};
 
 	fn.require = function (dependencies, callback, context) {
-		if( !_.isFunction(callback) ) return false;
+		if( !isFunction(callback) ) {
+			return false;
+		}
 
 		var runCallback = function () {
 			for( var i = 0, len = dependencies.length, injections = []; i < len; i++ ) {
@@ -280,9 +188,11 @@
 			}
 		};
 
-		if( _.isString(dependencies) ) dependencies = [dependencies];
+		if( isString(dependencies) ) {
+			dependencies = [dependencies];
+		}
 
-		if( _.isArray(dependencies) ) {
+		if( isArray(dependencies) ) {
 
 			if( dependencies.length ) {
 
@@ -296,18 +206,23 @@
 					runCallback();
 				}
 
-			} else runCallback();
+			} else {
+				runCallback();
+			}
 		}
 
 		return fn;
 	};
 
-	fn.when = function (fnName, callback) {
-		if( _.isFunction(callback) ) {
-			if( definitions[fnName] ) callback.apply(context, definitions[fnName]);
-			else onceFn(fnName, function (definition) {
-				callback.apply(context, definition);
-			});
+	fn.when = function (fnName, callback, context) {
+		if( isFunction(callback) ) {
+			if( definitions[fnName] ) {
+				callback.apply(context, definitions[fnName]);
+			} else {
+				onceFn(fnName, function (definition) {
+					callback.apply(context, definition);
+				});
+			}
 		}
 
 		return fn;
@@ -319,17 +234,24 @@
 		return fn;
 	};
 
-	fn.globalize = _.globalize;
+	fn.globalize = globalize;
 
-	_.globalize('fn', fn);
+	globalize('fn', fn);
 
-	fn.load = window.addEventListener ? function (listener) {
-		window.addEventListener('load', listener, false);
-		return fn;
-	} : function (listener) {
-		window.attachEvent('onload', listener );
-		return fn;
-	};
+	if( !_global.define ) {
+		_global.define = fn.define;
+	}
+
+	if( typeof window !== 'undefined' ) {
+		fn.load = window.addEventListener ? function (listener) {
+			window.addEventListener('load', listener, false);
+			return fn;
+		} : function (listener) {
+			window.attachEvent('onload', listener );
+			return fn;
+		};
+	}
+
 
 	fn.ready = function (callback) {
 		if( callback instanceof Function ) {
@@ -358,7 +280,7 @@
 		if( Object.keys(missingDependencies).length ) {
 			console.group('missing dependencies');
 			for( key in missingDependencies ) {
-				log(key, missingDependencies[key]);
+				console.log(key, missingDependencies[key]);
 			}
 			console.groupEnd();
 		}
