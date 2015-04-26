@@ -1,7 +1,7 @@
-[![npm version](https://badge.fury.io/js/jstool-core.svg)](http://badge.fury.io/js/jstool-core)
-[![Bower version](https://badge.fury.io/bo/jstool-core.svg)](http://badge.fury.io/bo/jstool-core)
-[![Build Status](https://travis-ci.org/jstools/core.js.svg?branch=master)](https://travis-ci.org/jstools/core.js)
-jsTool-core
+[![npm version](https://badge.fury.io/js/jn-core.svg)](http://badge.fury.io/js/jn-core)
+[![Bower version](https://badge.fury.io/bo/jn-core.svg)](http://badge.fury.io/bo/jn-core)
+[![Build Status](https://travis-ci.org/jstools/jn-core.svg?branch=master)](https://travis-ci.org/jstools/jn-core)
+jsTool: core
 ==================================
 > [MIT License](LICENSE)
 > global function 'fn' to sandbox all other definitions
@@ -22,7 +22,7 @@ fn.define(moduleName, dependencies?, definition)
 
 ``` js
 fn.define('moduleName', [ 'dependence_1', 'dependence_2', ..., function ( dependence_1, dependence_1, ...) {
-	
+
 	// your code
 
 	return definition;
@@ -32,7 +32,7 @@ fn.define('moduleName', [ 'dependence_1', 'dependence_2', ..., function ( depend
 example
 ``` js
 fn.define('isLargeString', [ '_', function ( _ ) {
-	
+
 	function isLargeString (str) {
 		return _.isString(str) && str.length > 45;
 	}
@@ -46,7 +46,7 @@ fn.require(dependencies, callback)
 
 ``` js
 fn.require(['dependence_1', 'dependence_2'], function ( dependence_1, dependence_1 ) {
-	
+
 	// your code
 
 } ]);
@@ -59,7 +59,7 @@ fn.run(dependencies || function)
 explicit injection mode
 ``` js
 fn.run(['dependence_1', 'dependence_2', function ( dependence_1, dependence_1 ) {
-	
+
 	// your code
 
 } ]);
@@ -68,7 +68,7 @@ fn.run(['dependence_1', 'dependence_2', function ( dependence_1, dependence_1 ) 
 implicit injection mode (dependencies will be automatically detected -not recomended when uglifying code- )
 ``` js
 fn.run(function ( dependence_1, dependence_1 ) {
-	
+
 	// your code
 
 });
