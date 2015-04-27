@@ -1,10 +1,10 @@
 module.exports = function(config) {
-  
+
   var configuration = {
     frameworks: ['jasmine'],
     plugins: [ 'karma-jasmine', 'karma-chrome-launcher' ],
     files: [
-      'core.js',
+      'fn.js',
       'tests/*.js'
     ],
     browsers: [ 'Chrome' ],

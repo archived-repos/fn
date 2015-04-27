@@ -1,8 +1,8 @@
 {
-    "name": "jn-core",
+    "name": "gear-fn",
     "version": "0.1.56",
     "description": "Basic JS Web Tools",
-    "main": "core.js",
+    "main": "fn.js",
     "dependencies": {},
     "devDependencies": {
         "grunt": "*",
@@ -26,16 +26,17 @@
         "time-grunt": "*"
     },
     "scripts": {
-        "test": "grunt test"
+        "test": "grunt test",
+        "posttest": "grunt uglify:min"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/jstools/jn-core.git"
+        "url": "https://github.com/jstools/fn.git"
     },
     "author": "Jesus Germade <jesus@germade.es>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/jstools/jn-core/issues"
+        "url": "https://github.com/jstools/fn/issues"
     },
-    "homepage": "https://github.com/jstools/jn-core"
+    "homepage": "https://github.com/jstools/fn"
 }

@@ -1,6 +1,6 @@
-[![npm version](https://badge.fury.io/js/jn-core.svg)](http://badge.fury.io/js/jn-core)
-[![Bower version](https://badge.fury.io/bo/jn-core.svg)](http://badge.fury.io/bo/jn-core)
-[![Build Status](https://travis-ci.org/jstools/jn-core.svg?branch=master)](https://travis-ci.org/jstools/jn-core)
+[![npm version](https://badge.fury.io/js/gear-fn.svg)](http://badge.fury.io/js/gear-fn)
+[![Bower version](https://badge.fury.io/bo/gear-fn.svg)](http://badge.fury.io/bo/gear-fn)
+[![Build Status](https://travis-ci.org/jstools/fn.svg?branch=master)](https://travis-ci.org/jstools/fn)
 jsTool: core
 ==================================
 > [MIT License](LICENSE)
