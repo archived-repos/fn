@@ -1,5 +1,5 @@
-[![npm version](https://badge.fury.io/js/gear-fn.svg)](http://badge.fury.io/js/gear-fn)
-[![Bower version](https://badge.fury.io/bo/gear-fn.svg)](http://badge.fury.io/bo/gear-fn)
+[![npm version](https://badge.fury.io/js/jstools-fn.svg)](http://badge.fury.io/js/jstools-fn)
+[![Bower version](https://badge.fury.io/bo/jstools-fn.svg)](http://badge.fury.io/bo/jstools-fn)
 [![Build Status](https://travis-ci.org/jstools/fn.svg?branch=master)](https://travis-ci.org/jstools/fn)
 jsTool: core
 ==================================
