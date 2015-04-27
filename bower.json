@@ -1,7 +1,7 @@
 {
     "name": "jstools-fn",
     "main": "fn.js",
-    "version": "0.1.56",
+    "version": "0.1.57",
     "homepage": "https://github.com/jstools/fn",
     "authors": [
         "Jesús Germade <jesus@germade.es>"
