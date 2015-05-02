@@ -1,13 +1,16 @@
+jEngine: fn [![wercker status](https://app.wercker.com/status/2675049afb0e2dc763867d5d6bcde848/s "wercker status")](https://app.wercker.com/project/bykey/2675049afb0e2dc763867d5d6bcde848)
+==================================
 [![npm version](https://badge.fury.io/js/jstools-fn.svg)](http://badge.fury.io/js/jstools-fn)
 [![Bower version](https://badge.fury.io/bo/jstools-fn.svg)](http://badge.fury.io/bo/jstools-fn)
 [![Build Status](https://travis-ci.org/jstools/fn.svg?branch=master)](https://travis-ci.org/jstools/fn)
-jsTool: core
-==================================
 > [MIT License](LICENSE)
+
 > global function 'fn' to sandbox all other definitions
 
+Old Browsers
+------------
+> it's recomended to add this code before scripts to ensure compatibility with old browsers
 
-it's recomended to add this code before scripts to ensure compatibility with old browsers
 ``` html
 <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.0.5/es5-shim.min.js"></script>
@@ -17,8 +20,19 @@ it's recomended to add this code before scripts to ensure compatibility with old
 <![endif]-->
 ```
 
-fn.define(moduleName, dependencies?, definition)
-------------------------------------------------
+Installation
+------------
+``` sh
+npm install jstools-fn --save
+```
+  or
+``` sh
+bower install jstools-fn --save
+```
+
+Usage
+-----
+### fn.define(moduleName, dependencies?, definition)
 
 ``` js
 fn.define('moduleName', [ 'dependence_1', 'dependence_2', ..., function ( dependence_1, dependence_1, ...) {
@@ -29,7 +43,7 @@ fn.define('moduleName', [ 'dependence_1', 'dependence_2', ..., function ( depend
 } ]);
 ```
 
-example
+### example
 ``` js
 fn.define('isLargeString', [ '_', function ( _ ) {
 
@@ -41,9 +55,7 @@ fn.define('isLargeString', [ '_', function ( _ ) {
 } ]);
 ```
 
-fn.require(dependencies, callback)
------------------------------------
-
+### fn.require(dependencies, callback)
 ``` js
 fn.require(['dependence_1', 'dependence_2'], function ( dependence_1, dependence_1 ) {
 
@@ -52,11 +64,11 @@ fn.require(['dependence_1', 'dependence_2'], function ( dependence_1, dependence
 } ]);
 ```
 
-fn.run(dependencies || function)
---------------------------------
+### fn.run(dependencies || function)
 > or just **fn(dependencies || function)**
 
-explicit injection mode
+> explicit injection mode
+
 ``` js
 fn.run(['dependence_1', 'dependence_2', function ( dependence_1, dependence_1 ) {
 
@@ -65,7 +77,8 @@ fn.run(['dependence_1', 'dependence_2', function ( dependence_1, dependence_1 ) 
 } ]);
 ```
 
-implicit injection mode (dependencies will be automatically detected -not recomended when uglifying code- )
+> implicit injection mode (dependencies will be automatically detected -not recomended when uglifying code- )
+
 ``` js
 fn.run(function ( dependence_1, dependence_1 ) {
 
@@ -74,8 +87,7 @@ fn.run(function ( dependence_1, dependence_1 ) {
 });
 ```
 
-fn.defer(function, timeout? (0) )
------------------------------------
+### fn.defer(function, timeout? (0) )
 
 ``` js
 fn(function () { console.log('test 1'); });
@@ -83,7 +95,7 @@ fn.defer(function () { console.log('test 2'); });
 fn(function () { console.log('test 3'); });
 ```
 
-this will output
+> output:
 ```
 test 1
 test 3
