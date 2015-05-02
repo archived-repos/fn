@@ -240,6 +240,10 @@
 		_global.define = fn.define;
 	}
 
+	if( !_global.require ) {
+		_global.require = fn.require;
+	}
+
 	if( typeof window !== 'undefined' ) {
 		fn.load = window.addEventListener ? function (listener) {
 			window.addEventListener('load', listener, false);
