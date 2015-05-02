@@ -1,6 +1,6 @@
 {
     "name": "jstools-fn",
-    "version": "0.1.57",
+    "version": "0.1.58",
     "description": "Basic JS Web Tools",
     "main": "fn.js",
     "dependencies": {},
