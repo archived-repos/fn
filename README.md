@@ -1,7 +1,7 @@
 jEngine: fn [![wercker status](https://app.wercker.com/status/2675049afb0e2dc763867d5d6bcde848/s "wercker status")](https://app.wercker.com/project/bykey/2675049afb0e2dc763867d5d6bcde848)
 ==================================
-[![npm version](https://badge.fury.io/js/jstools-fn.svg)](http://badge.fury.io/js/jstools-fn)
-[![Bower version](https://badge.fury.io/bo/jstools-fn.svg)](http://badge.fury.io/bo/jstools-fn)
+[![npm version](https://badge.fury.io/js/jengine-fn.svg)](http://badge.fury.io/js/jengine-fn)
+[![Bower version](https://badge.fury.io/bo/jengine-fn.svg)](http://badge.fury.io/bo/jengine-fn)
 [![Build Status](https://travis-ci.org/jstools/fn.svg?branch=master)](https://travis-ci.org/jstools/fn)
 > [MIT License](LICENSE)
 
@@ -23,11 +23,11 @@ Old Browsers
 Installation
 ------------
 ``` sh
-npm install jstools-fn --save
+npm install jengine-fn --save
 ```
   or
 ``` sh
-bower install jstools-fn --save
+bower install jengine-fn --save
 ```
 
 Usage

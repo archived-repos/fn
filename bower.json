@@ -1,5 +1,5 @@
 {
-    "name": "jstools-fn",
+    "name": "jengine-fn",
     "main": "fn.js",
     "version": "0.1.60",
     "homepage": "https://github.com/jstools/fn",
