@@ -1,42 +1,30 @@
 {
-    "name": "fn-sandbox",
-    "version": "0.1.0",
-    "description": "Basic JS Web Tools",
-    "main": "fn.js",
-    "dependencies": {},
-    "devDependencies": {
-        "grunt": "*",
-        "grunt-contrib-clean": "*",
-        "grunt-contrib-concat": "*",
-        "grunt-contrib-copy": "*",
-        "grunt-contrib-jshint": "*",
-        "grunt-contrib-uglify": "*",
-        "grunt-contrib-watch": "*",
-        "grunt-increase-version": "*",
-        "grunt-shell": "*",
-        "grunt-fileserver": "*",
-        "grunt-injector": "*",
-        "grunt-karma": "^0.9.0",
-        "jasmine": "^2.1.1",
-        "jasmine-core": "^2.1.3",
-        "karma": "^0.12.28",
-        "karma-jasmine": "^0.3.2",
-        "karma-chrome-launcher": "^0.1.4",
-        "load-grunt-tasks": "*",
-        "time-grunt": "*"
-    },
-    "scripts": {
-        "test": "grunt test",
-        "posttest": "grunt uglify:min"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/jstools/fn.git"
-    },
-    "author": "Jesus Germade <jesus@germade.es>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/jstools/fn/issues"
-    },
-    "homepage": "https://github.com/jstools/fn"
+  "name": "fn-sandbox",
+  "version": "0.1.0",
+  "description": "Basic JS Web Tools",
+  "main": "fn.js",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "karma": "^0.13.19",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-mocha": "^0.2.1",
+    "mocha": "^2.3.4",
+    "nitro": "^1.5.41"
+  },
+  "scripts": {
+    "test": "grunt test",
+    "posttest": "grunt uglify:min"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jstools/fn.git"
+  },
+  "author": "Jesus Germade <jesus@germade.es>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jstools/fn/issues"
+  },
+  "homepage": "https://github.com/jstools/fn"
 }

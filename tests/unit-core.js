@@ -1,3 +1,20 @@
+
+this.require = this.require || function (fnName) {
+	return this[fnName];
+}.bind(this);
+
+// (function (assert, fn) {
+//
+// })( typeof require !== 'undefined' ? require('assert') : this.assert )
+//
+// if( typeof require !== 'undefined' ) {
+// 	var assert = require('assert'),
+// 			fn = require('../lib/fn');
+// }
+
+var assert = require('assert'),
+		fn = require('../lib/fn') || require('fn');
+
 describe('jstool-core (fn)', function () {
 
 	it('basic definition', function () {
@@ -7,7 +24,7 @@ describe('jstool-core (fn)', function () {
 			return fn1;
 		});
 
-		expect(fn('fn1')).toBe(fn1);
+		assert(fn('fn1') === fn1);
 	});
 
 	it('fn.define with dependence', function (done) {
@@ -24,7 +41,7 @@ describe('jstool-core (fn)', function () {
 		}]);
 
 		fn.defer(function () {
-			expect(fn('fn4')).toBe(fn4);
+			assert(fn('fn4') === fn4);
 			done();
 		});
 	});
@@ -33,7 +50,7 @@ describe('jstool-core (fn)', function () {
 		function fn2 () {};
 
 		fn.require(['fn2'], function (f2) {
-			expect(f2).toBe(fn2);
+			assert(f2 === fn2);
 			done();
 		});
 
@@ -53,7 +70,7 @@ describe('jstool-core (fn)', function () {
 		fn(function () { order += '3'; });
 
 		fn.defer(function () {
-			expect(order).toBe('132');
+			assert(order === '132');
 			done();
 		});
 	});
@@ -63,7 +80,7 @@ describe('jstool-core (fn)', function () {
 		function fn5 () {};
 
 		fn.defer(function () {
-			expect(fn('fn5')).toBe(fn5);
+			assert(fn('fn5') === fn5);
 			done();
 		});
 
@@ -78,7 +95,7 @@ describe('jstool-core (fn)', function () {
 		function fn6 () {};
 
 		fn.define('nothing', ['fn6', function (f6) {
-			expect(f6).toBe(fn6);
+			assert(f6 === fn6);
 			done();
 			return 'nothing';
 		}]);
@@ -93,7 +110,7 @@ describe('jstool-core (fn)', function () {
 		function fn7 () {};
 
 		fn.define('nothing', function (f7) {
-			expect(f7).toBe(fn7);
+			assert(f7 === fn7);
 			done()
 			return 'nothing';
 		});
@@ -109,8 +126,8 @@ describe('jstool-core (fn)', function () {
 		function fn9 () {};
 
 		fn.define('nothing', function (f8, f9) {
-			console.log('fn.define implicit injection (2)', f8, f9);
-			expect(f9).toBe(fn9);
+			// console.log('fn.define implicit injection (2)', f8, f9);
+			assert(f9 === fn9);
 			done();
 			return 'nothing';
 		});
