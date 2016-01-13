@@ -1,6 +1,6 @@
 {
-    "name": "jengine-fn",
-    "version": "0.1.60",
+    "name": "fn-sandbox",
+    "version": "0.1.0",
     "description": "Basic JS Web Tools",
     "main": "fn.js",
     "dependencies": {},

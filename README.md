@@ -23,11 +23,11 @@ Old Browsers
 Installation
 ------------
 ``` sh
-npm install jengine-fn --save
+npm install fn-sandbox --save
 ```
   or
 ``` sh
-bower install jengine-fn --save
+bower install fn-sandbox --save
 ```
 
 Usage
