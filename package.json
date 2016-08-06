@@ -1,42 +1,42 @@
 {
-    "name": "jengine-fn",
-    "version": "0.1.60",
-    "description": "Basic JS Web Tools",
-    "main": "fn.js",
-    "dependencies": {},
-    "devDependencies": {
-        "grunt": "*",
-        "grunt-contrib-clean": "*",
-        "grunt-contrib-concat": "*",
-        "grunt-contrib-copy": "*",
-        "grunt-contrib-jshint": "*",
-        "grunt-contrib-uglify": "*",
-        "grunt-contrib-watch": "*",
-        "grunt-increase-version": "*",
-        "grunt-shell": "*",
-        "grunt-fileserver": "*",
-        "grunt-injector": "*",
-        "grunt-karma": "^0.9.0",
-        "jasmine": "^2.1.1",
-        "jasmine-core": "^2.1.3",
-        "karma": "^0.12.28",
-        "karma-jasmine": "^0.3.2",
-        "karma-chrome-launcher": "^0.1.4",
-        "load-grunt-tasks": "*",
-        "time-grunt": "*"
-    },
-    "scripts": {
-        "test": "grunt test",
-        "posttest": "grunt uglify:min"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/jstools/fn.git"
-    },
-    "author": "Jesus Germade <jesus@germade.es>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/jstools/fn/issues"
-    },
-    "homepage": "https://github.com/jstools/fn"
+  "name": "jengine-fn",
+  "version": "0.1.61",
+  "description": "Basic JS Web Tools",
+  "main": "fn.js",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-increase-version": "*",
+    "grunt-shell": "*",
+    "grunt-fileserver": "*",
+    "grunt-injector": "*",
+    "grunt-karma": "^0.9.0",
+    "jasmine": "^2.1.1",
+    "jasmine-core": "^2.1.3",
+    "karma": "^0.12.28",
+    "karma-jasmine": "^0.3.2",
+    "karma-chrome-launcher": "^0.1.4",
+    "load-grunt-tasks": "*",
+    "time-grunt": "*"
+  },
+  "scripts": {
+    "test": "grunt test",
+    "posttest": "grunt uglify:min"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jstools/fn.git"
+  },
+  "author": "Jesus Germade <jesus@germade.es>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jstools/fn/issues"
+  },
+  "homepage": "https://github.com/jstools/fn"
 }
